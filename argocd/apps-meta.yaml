@@ -15,7 +15,7 @@ spec:
   source:
     repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
     targetRevision: main
-    path: argocd/
+    path: meta/
   syncPolicy:
     automated:
       prune: true

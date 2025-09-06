@@ -1,22 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: infra-argocd
+  name: skiut
   namespace: meta
   labels:
     app.kubernetes.io/part-of: k3s-project
   annotations:
-    description: "Application infra - S'occupe de l'infra transversale (traefik, cert-manager, monitoring, metrics, etc.)"
-    argocd.argoproj.io/sync-wave: "1"
+    description: "Application skiut - S'occupe de l'application Ski'ut (Backend Laravel, BDD MySql, monitoring, etc.)"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: infra
+    namespace: skiut
   source:
     repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
     targetRevision: main
-    path: infra/
+    path: apps/skiut/
   syncPolicy:
     automated:
       prune: true

@@ -1,22 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hosting-argocd
-  namespace: hosting
+  name: infra
+  namespace: meta
   labels:
     app.kubernetes.io/part-of: k3s-project
   annotations:
-    description: "Application hosting - S'occupe de l'hébergement (Sites statiques et apps dockerisées)"
-    argocd.argoproj.io/sync-wave: "2"
+    description: "Application infra - S'occupe de l'infra transversale (traefik, cert-manager, monitoring, metrics, etc.)"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: hosting
+    namespace: infra
   source:
     repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
     targetRevision: main
-    path: apps/hosting/
+    path: infra/
   syncPolicy:
     automated:
       prune: true
