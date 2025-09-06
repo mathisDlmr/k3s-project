@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hosting-argocd
+  name: hosting
   namespace: meta
   labels:
     app.kubernetes.io/part-of: k3s-project
