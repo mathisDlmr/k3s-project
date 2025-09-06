@@ -3,6 +3,14 @@
 ## TODO
 * setup SFTP
 
+## Reprendre le boulot 
+* Démarrer le N150
+* Attendre 5min
+* `k get pods` pour voir sir k3s est lancé
+* `k port-forward svc/argocd-server -n argocd 8081:443`
+* Aller sur l'UI `http://localhost:8081`
+* Bip-Boup
+
 ## Tuto
 
 ### 1. Installer une OS Server (e.g. Ubuntu Server) sur un Rasp, N150, ...
