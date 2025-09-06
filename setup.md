@@ -71,8 +71,8 @@ scp <login>@<ip>:/etc/rancher/k3s/k3s.yaml ./k3s.yaml
 
 Modifier le fichier pour pointer vers le serveur
 ```bash
-sed -i 's/127.0.0.1/<ip>/' k3s.yaml
-echo "KUBECONFIG=$(pwd)/k3s.yaml" >> ~/.bashrc
+mkdir -p ~/.kube
+sed -i 's/127.0.0.1/<ip>/' ~/.kube/config
 k get pods -A
 ```
 
