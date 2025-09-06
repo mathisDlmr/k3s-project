@@ -56,7 +56,7 @@ k3s-project/
 │   │       └── prod/
 │   │           └── values.yaml
 │   │
-│   ├── hebergement/
+│   ├── hosting/
 │   │   ├── static/             # Router statique nginx
 │   │   │   └── values.yaml
 │   │   ├── dockerized/         # web-apps dockerisées
@@ -72,11 +72,11 @@ k3s-project/
 │   ├── apps-infra.yaml         # Applications enfants pour l'infra
 │   ├── apps-registry.yaml      # Application enfant pour Harbor
 │   ├── apps-skiut.yaml         # Application enfant SkiUt
-│   └── apps-hebergement.yaml   # Application enfant Hébergement
+│   └── apps-hosting.yaml   # Application enfant Hébergement
 │
 └── charts/
     ├── skiut/
-    └── hebergement/
+    └── hosting/
 ```
 
 ## Brouillon d'infra
@@ -100,10 +100,10 @@ Meta
 │   ├── workers-queue / cron / workflow  # opt.
 │   └── monitoring-skiut                 # ServiceMonitor, dashboards
 │ 
-└── hebergement
+└── hosting
     ├── static-sites
     │   └── nginx-router    # sert les HTML/CSS/JS
-    └── dockerized-apps
+    └── dockerized-apps     # A un niveau supérieur il peut être intéressant de créer un ApplicationSet pour fournir un BDD + interface UI
         ├── app-template    # template/chart pour 1 app
         ├── app1
         └── app2
