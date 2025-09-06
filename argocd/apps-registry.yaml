@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: registry-argocd
+  namespace: registry
+  labels:
+    app.kubernetes.io/part-of: k3s-project
+  annotations:
+    description: "Application registry - S'occupe du registry Harbor"
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: registry
+  source:
+    repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
+    targetRevision: main
+    path: registry/
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - Validate=false
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

@@ -1,21 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: meta-argocd
-  namespace: meta
+  name: hosting-argocd
+  namespace: hosting
   labels:
     app.kubernetes.io/part-of: k3s-project
   annotations:
-    description: "Application meta à la racine du projet - Elle déploie toutes les applications hebergées sur le cluster"
+    description: "Application hosting - S'occupe de l'hébergement (Sites statiques et apps dockerisées)"
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: meta
+    namespace: hosting
   source:
     repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
     targetRevision: main
-    path: argocd/
+    path: apps/hosting/
   syncPolicy:
     automated:
       prune: true
