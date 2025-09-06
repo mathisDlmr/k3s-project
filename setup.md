@@ -3,6 +3,8 @@
 ## TODO
 * setup SFTP
 
+## Tuto
+
 ### 1. Installer une OS Server (e.g. Ubuntu Server) sur un Rasp, N150, ...
 
 ### 2. Installer et configurer la connexion SSH (généralement possible à l'installation)
@@ -79,12 +81,22 @@ k get pods -A
 ### 8. Déployer argoCD
 
 ```bash
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+k create namespace argocd
+k apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 k get pods -n argocd
+k -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
 k port-forward svc/argocd-server -n argocd 8081:443
 ```
 
--> L'UI est maintenant accessible sur `http://localhost:8081`
+-> L'UI est maintenant accessible sur `http://localhost:8081`. Le login est `admin` est le mdp a été révélé par le secret ci-dessus
 
-### 9. 
+### 9. Déployer meta 
+
+```bash
+k create namespace meta
+k apply -f argocd/apps-meta.yaml
+```
+
+-> Il devrait apparaitre sur l'UI
+
+### 10. 
