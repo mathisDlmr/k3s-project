@@ -5,7 +5,7 @@ metadata:
 spec:
   acme:
     email: mathis.dlmr@gmail.com
-    server: https://acme-staging-v02.api.letsencrypt.org/directory   # Prod : https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory   # Staging : https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: acme-key
     solvers:
