@@ -154,7 +154,7 @@ k get challenges -A
 k describe challenge mdlmr-fr-tls-<id_de_challenge> -n infra
 ```
 
-### 11. Déployer meta 
+### 14. Déployer meta 
 
 ```bash
 k create namespace meta
