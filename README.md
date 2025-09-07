@@ -68,8 +68,7 @@ k3s-project/
 │   └── kustomization.yaml
 │
 ├── argocd/
-│   ├── app-of-apps-meta.yaml   # Application "Meta" (App-of-Apps)
-│   └── apps-hosting.yaml   # Application enfant Hébergement
+│   └── app-of-apps-meta.yaml   # Application "Meta" (App-of-Apps)
 │
 ├── meta/
 │   ├── apps-infra.yaml         # Applications enfants pour l'infra
