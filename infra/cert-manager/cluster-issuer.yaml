@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: cluster-issuer
+spec:
+  acme:
+    email: ton.email@domaine.com                                     # TODO : ajuster l'adresse email
+    server: https://acme-staging-v02.api.letsencrypt.org/directory   # Prod : https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: acme-key
+    solvers:
+    - http01:
+        ingress:
+          class: traefik
