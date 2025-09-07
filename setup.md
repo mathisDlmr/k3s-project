@@ -129,6 +129,30 @@ Pour ça, créer le namespace infra et ajouter en secret le token de cloudflare
 ```bash
 kubectl create namespace infra
 kubectl create secret generic cloudflared-token --from-literal=token='<token>' -n infra
+```
+
+### 13. Challenge DNS
+
+Pour permettre à Let's Encrypt de faire ses challenges, il faut soit 
+* Configurer les CNAME pour permettre les challenges HTTP sur chaque CNAME
+* Créer un token API avec droits d'édition sur les zones DNS pour faire des challenges DNS
+La deuxième solution étant plus simple, c'est celle qu'on implémente ici
+```bash
+kubectl create secret generic cloudflare-api-token-secret --from-literal=api-token='<token>' -n infra
+```
+
+On peut vérifier après avec 
+```bash
+k describe certificate mdlmr-fr-tls -n infra
+```
+
+En cas d'erreur, vérifier les challenges : 
+```bash
+k describe certificate mdlmr-fr-tls -n infra
+k describe certificaterequest mdlmr-fr-tls -n infra
+k get challenges -A
+k describe challenge mdlmr-fr-tls-<id_de_challenge> -n infra
+```
 
 ### 11. Déployer meta 
 
