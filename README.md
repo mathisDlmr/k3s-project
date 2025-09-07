@@ -31,9 +31,9 @@ Niveau techno, on sera principalement sur du :
 k3s-project/
 ├── infra/                      # Pile infra transversale
 │   ├── ingress/                # IngressController traefik
-│   │   └── values.yaml
+│   │   └── cluster-ingress.yaml
 │   ├── cert-manager/
-│   │   └── values.yaml
+│   │   └── cluster-issuer.yaml
 │   ├── monitoring/             # kube-prometheus-stack, Grafana, Loki (ou EFK mais un peu overkill)
 │   │   └── values.yaml
 │   ├── metrics-server/
@@ -86,8 +86,8 @@ k3s-project/
 ```bash
 Meta
 ├── infra
-│   ├── ingress-controller
-│   ├── cert-manager
+│   ├── cluster-ingress
+│   ├── cluster-issuer
 │   ├── monitoring
 │   ├── metrics
 │   └── (opt.) logging / external-dns

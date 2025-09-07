@@ -2,6 +2,7 @@
 
 ## TODO
 * setup SFTP
+* kind Kustomization
 
 ## Reprendre le boulot 
 * Démarrer le N150
