@@ -8,7 +8,6 @@ resources:
   - cloudflared/cloudflared-tunnel.yaml
   - ingress/cluster-ingress.yaml
 
-# Configuration des labels
 labels:
   - pairs:
       app.kubernetes.io/part-of: k3s-project
