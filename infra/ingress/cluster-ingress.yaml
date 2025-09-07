@@ -4,7 +4,8 @@ metadata:
   name: cluster-ingress
   namespace: infra
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: cluster-issuer
 spec:
   rules:
   - host: registry.mdlmr.fr
@@ -47,3 +48,11 @@ spec:
             name: argocd-server
             port:
               number: 80
+
+  tls:
+  - hosts:
+    - registry.mdlmr.fr
+    - skiut.mdlmr.fr
+    - hosting.mdlmr.fr
+    - argocd.mdlmr.fr
+    secretName: mdlmr-fr-tls
