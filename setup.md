@@ -3,6 +3,7 @@
 ## TODO
 * setup SFTP
 * kind Kustomization
+* créer des ressources kind Namespace au cas où
 
 ## Reprendre le boulot 
 * Démarrer le N150
@@ -99,13 +100,41 @@ k port-forward svc/argocd-server -n argocd 8081:443
 
 -> L'UI est maintenant accessible sur `http://localhost:8081`. Le login est `admin` est le mdp a été révélé par le secret ci-dessus
 
-### 9. Déployer meta 
+### 9. Déployer cert-manager
+
+Pour permettre une connexion HTTPS sans avoir à renouveler les certificats TLS à la main, le plus simple est d'installer cert-manager.
+Cert-manager s'occupe tout seul de communiquer avec Lets-Encrypt et résoudre les challenges DNS/HTTP pour récupérer un certificat.
+Une fois le certificat délivré, il le stocke dans un secret qui peut être ensuite utilisé par l'Ingress.
+La ressource cluster-issuer permet simplement de configurer le CA qu'on utilise.
+
+```bash
+k create namespace cert-manager
+k apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
+k get pods -n cert-manager
+```
+
+### 12. Cloudflare Tunnel
+
+Afin de permettre l'installation du serveur sur n'importe quel réseau sans ouvrir de port, un tunnel cloudflare a été défini.
+Concrètement, un Daemonset `cloudflared` agit pour maintenir une connexion persistante vers CloudFlare qui sert de tunnel :
+```
+[ Navigateur ] ⇄ HTTPS ⇄ [ Cloudflare Edge ]
+                              ⇅
+                              ⇅ (Tunnel sortant maintenu)
+                              ⇅
+                       [ cloudflared Daemon ] → [ Ingress Controller Traefik ] → [ Services ]
+```
+
+Pour ça, créer le namespace infra et ajouter en secret le token de cloudflare
+```bash
+kubectl create namespace infra
+kubectl create secret generic cloudflared-token --from-literal=token='<token>' -n infra
+
+### 11. Déployer meta 
 
 ```bash
 k create namespace meta
 k apply -f argocd/apps-meta.yaml
 ```
 
--> Il devrait apparaitre sur l'UI
-
-### 10. 
+-> Il devrait apparaitre sur l'UI et commencer à tout créer
