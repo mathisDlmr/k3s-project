@@ -48,6 +48,16 @@ spec:
             name: argocd-server
             port:
               number: 80
+  - host: mdlmr.fr
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: website
+            port:
+              number: 80
 
   tls:
   - hosts:
@@ -55,4 +65,5 @@ spec:
     - skiut.mdlmr.fr
     - hosting.mdlmr.fr
     - argocd.mdlmr.fr
+    - mdlmr.fr
     secretName: mdlmr-fr-tls
