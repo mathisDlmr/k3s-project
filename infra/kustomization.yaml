@@ -11,6 +11,9 @@ resources:
   - website/website-deployment.yaml
   - website/website-service.yaml
 
+patchesStrategicMerge:
+  - ingress/argocd-namespace-patch.yaml
+
 labels:
   - pairs:
       app.kubernetes.io/part-of: k3s-project
