@@ -6,7 +6,8 @@ namespace: infra
 resources:
   - cert-manager/cluster-issuer.yaml
   - cloudflared/cloudflared-tunnel.yaml
-  - ingress/cluster-ingress.yaml
+  - ingress/argocd-ingress.yaml
+  - ingress/website-ingress.yaml
   - website/website-deployment.yaml
   - website/website-service.yaml
 
