@@ -9,6 +9,9 @@ spec:
     privateKeySecretRef:
       name: acme-key
     solvers:
-    - http01:
-        ingress:
-          class: traefik
+    - dns01:
+        cloudflare:
+          email: mathis.dlmr@gmail.com
+          apiTokenSecretRef:
+            name: cloudflare-api-token-secret
+            key: api-token
