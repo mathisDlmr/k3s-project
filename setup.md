@@ -1,6 +1,9 @@
 # Setup du projet
 
 ## TODO
+* setup ssh avec le tunnel 
+* setup kubectl avec le tunnem
+* voir pour l'ui argocd resolue par dns
 * setup SFTP
 * kind Kustomization
 * créer des ressources kind Namespace au cas où
@@ -130,13 +133,16 @@ Pour ça, créer le namespace infra et ajouter en secret le token de cloudflare
 kubectl create namespace infra
 kubectl create secret generic cloudflared-token --from-literal=token='<token>' -n infra
 ```
+Ensuite, il faut configurer le DNS du tunel cloudflare pour chaque sous-domaine DNS souhaité en lui donnant une target dans le cluster.
+**Attention** : comme la sortie du tunnel est dans le cluster, la target est au format `https://....namespace.svc.cluster.local:port`
 
 ### 13. Challenge DNS
 
 Pour permettre à Let's Encrypt de faire ses challenges, il faut soit 
 * Configurer les CNAME pour permettre les challenges HTTP sur chaque CNAME
 * Créer un token API avec droits d'édition sur les zones DNS pour faire des challenges DNS
-La deuxième solution étant plus simple, c'est celle qu'on implémente ici
+La deuxième solution étant plus simple, c'est celle qu'on implémente ici.
+Pour ça il faut aller sur cloudfare pour créer le token api et lui donner des droits d'édition sur la zone DNS mdlmr
 ```bash
 kubectl create secret generic cloudflare-api-token-secret --from-literal=api-token='<token>' -n infra
 ```

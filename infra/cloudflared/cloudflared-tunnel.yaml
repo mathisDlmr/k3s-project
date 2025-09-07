@@ -13,6 +13,7 @@ spec:
       labels:
         app: cloudflared-tunnel
     spec:
+      hostNetwork: true
       containers:
       - name: cloudflared-tunnel
         image: cloudflare/cloudflared:latest
