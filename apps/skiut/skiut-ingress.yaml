@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: skiut-ingress
+  namespace: skiut
+spec:
+  rules:
+  - host: skiut.mdlmr.fr
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: skiut-backend
+              port:
+                number: 80
+        - path: /pma
+          pathType: Prefix
+          backend:
+            service:
+              name: skiut-pma
+              port:
+                number: 80

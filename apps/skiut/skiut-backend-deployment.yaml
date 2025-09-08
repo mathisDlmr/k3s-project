@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skiut-backend
+  namespace: skiut
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: skiut-backend
+  template:
+    metadata:
+      labels:
+        app: skiut-backend
+    spec:
+      containers:
+      - name: skiut-backend
+        image: registry.gitlab.utc.fr/skiutc/server-skiut-2026:latest
+        ports:
+        - containerPort: 80
+        # resources:
+        env:
+          - name: # TODO

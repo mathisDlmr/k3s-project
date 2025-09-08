@@ -1,0 +1,38 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: skiut-backend
+  namespace: skiut
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: skiut-backend
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0   # pas de délai avant montée
+      policies:
+      - type: Percent
+        value: 100                    # max doublement par minute
+        periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300 # attend 5 min avant de réduire
+      policies:
+      - type: Percent
+        value: 50                     # réduit de moitié max par minute
+        periodSeconds: 60

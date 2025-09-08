@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: StatefulSet
+metadata:
+  name: skiut-database
+  namespace: skiut
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: skiut-database
+  template:
+    metadata:
+      labels:
+        app: skiut-database
+    spec:
+      containers:
+      - name: skiut-database
+        image: mysql:8.0
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-skiut-configmap
+              key: MYSQL_DB
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-skiut-secret
+              key: MYSQL_ROOT_PASSWORD
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-skiut-secret
+              key: MYSQL_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-skiut-secret
+              key: MYSQL_PASSWORD
