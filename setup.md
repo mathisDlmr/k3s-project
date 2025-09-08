@@ -1,20 +1,25 @@
 # Setup du projet
 
-## TODO
-* setup ssh avec le tunnel 
-* setup kubectl avec le tunnem
-* voir pour l'ui argocd resolue par dns
-* setup SFTP
-* kind Kustomization
-* créer des ressources kind Namespace au cas où
+## Website 
+- [ ] Ajuster le shadow violet sur les techno
+- [ ] Ajouter un filtre sur les projets
+- [ ] Mettre à jour les liens, descriptions, langages... dans les projects
+- [ ] Proposer plusieurs screens/pdf de chaque projet
 
-## Reprendre le boulot 
-* Démarrer le N150
-* Attendre 5min
-* `k get pods` pour voir sir k3s est lancé
-* `k port-forward svc/argocd-server -n argocd 8081:443`
-* Aller sur l'UI `http://localhost:8081`
-* Bip-Boup
+## Projets
+* Skiut
+* Uptime Kuma
+* Monitoring Prom Grafana / Loki
+* Hosting étu
+* Registry Harbor
+* Gitea
+
+## TODO
+* setup kubectl et ssh avec une ouverture de port
+* setup SFTP
+* créer des ressources kind Namespace au cas où
+* kind Kustomization
+* Actuellement le certificat de sécurité récupéré n'est pas vraiment utilisé car validé pour le domaine, mais pas pour l'IP 192...... En effet, comme Let's Encrypt n'arrive pas à tester l'IP privée, ça fail. Il faudra réessayer avec les ports ouverts et en ajoutant l'ip dans les hosts tls de cluster-ingress
 
 ## Tuto
 
@@ -133,8 +138,8 @@ Pour ça, créer le namespace infra et ajouter en secret le token de cloudflare
 kubectl create namespace infra
 kubectl create secret generic cloudflared-token --from-literal=token='<token>' -n infra
 ```
-Ensuite, il faut configurer le DNS du tunel cloudflare pour chaque sous-domaine DNS souhaité en lui donnant une target dans le cluster.
-**Attention** : comme la sortie du tunnel est dans le cluster, la target est au format `https://....namespace.svc.cluster.local:port`
+Ensuite, il faut configurer le DNS du tunel cloudflare pour chaque sous-domaine DNS souhaité en lui donnant une target dans le cluster. Cela se fait depuis Zero Trust -> Networks -> Tunnels -> Public hostname
+**Attention** : comme la sortie du tunnel est dans le cluster, la target est au format `https://....namespace.svc.cluster.local:port` (exemple : http://argocd-server.argocd.svc.cluster.local:80)
 
 ### 13. Challenge DNS
 
@@ -160,7 +165,42 @@ k get challenges -A
 k describe challenge mdlmr-fr-tls-<id_de_challenge> -n infra
 ```
 
-### 14. Déployer meta 
+### 14. Rendre ArgoCD accessible
+
+Pour rendre argoCD accessible, il suffit de désactiver la sécurité comme notre https se fait maintenant au niveau de l'ingress, et que l'ingress sert ensuite vert notre service.
+On ajoute donc à argocd-cmd-params-cm :
+
+```yaml
+data:
+  server.insecure: "true"
+```
+
+Puis on redémarre argocd : 
+```bash
+k rollout restart deployment argocd-server -n argocd
+```
+
+
+<!-- ### 14. SSH à travers le tunnel
+
+Il est possible d'activer la connexion SSH depuis l'UI de CloudFlare.
+Pour ça il faut ajouter un public hostname avec le protocole SSH qui target le port `http://localhost:22`.
+Ensuite, côté dev, il faut ajouter 
+```bash
+echo '
+
+Host ssh.mdlmr.fr
+  ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
+  User user' >> ~/.ssh/config
+```
+
+Le serveur est maintenant accessible depuis `ssh login@ssh.mdlm.fr`
+
+### 15. Kubectl à travers le tunnel -->
+
+
+
+### Fin. Déployer meta 
 
 ```bash
 k create namespace meta
