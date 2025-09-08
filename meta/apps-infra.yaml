@@ -17,6 +17,8 @@ spec:
     repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
     targetRevision: main
     path: infra/
+    git:
+      submoduleEnabled: true
   syncPolicy:
     automated:
       prune: true
