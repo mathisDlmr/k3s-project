@@ -18,7 +18,13 @@ spec:
         image: registry.gitlab.utc.fr/skiutc/server-skiut-2026:latest
         ports:
         - containerPort: 80
-        # resources:
+        resources:
+          requests:
+            cpu: 100m 
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
         env:
         - name: DB_CONNECTION
           value: mysql
