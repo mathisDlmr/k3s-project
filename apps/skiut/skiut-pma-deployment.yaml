@@ -29,6 +29,8 @@ spec:
             configMapKeyRef:
               name: skiut-database-configmap
               key: MYSQL_PORT
+        - name: PMA_ABSOLUTE_URI
+          value: "https://skiut.mdlmr.fr/pma/"
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
