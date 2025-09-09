@@ -27,15 +27,15 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-skiut-secret
+              name: skiut-database-secret
               key: MYSQL_ROOT_PASSWORD
         - name: MYSQL_USER
           valueFrom:
             secretKeyRef:
-              name: mysql-skiut-secret
+              name: skiut-database-secret
               key: MYSQL_USER
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-skiut-secret
+              name: skiut-database-secret
               key: MYSQL_PASSWORD
