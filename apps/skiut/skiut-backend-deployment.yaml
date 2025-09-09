@@ -38,12 +38,9 @@ spec:
               name: skiut-database-configmap
               key: MYSQL_DB
         - name: DB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: skiut-database-secret
-              key: MYSQL_USER
+          value: root
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: skiut-database-secret
-              key: MYSQL_PASSWORD
+              key: MYSQL_ROOT_PASSWORD
