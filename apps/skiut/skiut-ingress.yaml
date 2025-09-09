@@ -22,3 +22,7 @@ spec:
               name: skiut-pma
               port:
                 number: 80
+  tls:
+  - hosts:
+    - skiut.mdlmr.fr
+    secretName: skiut-ingress-tls
