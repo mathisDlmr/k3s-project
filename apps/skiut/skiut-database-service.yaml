@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: skiut-database
+  name: skiut-database-service
   namespace: skiut
 spec:
   selector:
-    app: skiut-database
+    app: skiut-database-service
   ports:
   - name: mysql
     port: 3306
