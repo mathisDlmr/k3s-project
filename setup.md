@@ -138,8 +138,8 @@ Pour ça, créer le namespace infra et ajouter en secret le token de cloudflare
 kubectl create namespace infra
 kubectl create secret generic cloudflared-token --from-literal=token='<token>' -n infra
 ```
-Ensuite, il faut configurer le DNS du tunel cloudflare pour chaque sous-domaine DNS souhaité en lui donnant une target dans le cluster. Cela se fait depuis Zero Trust -> Networks -> Tunnels -> Public hostname
-**Attention** : comme la sortie du tunnel est dans le cluster, la target est au format `https://....namespace.svc.cluster.local:port` (exemple : http://argocd-server.argocd.svc.cluster.local:80)
+Ensuite, il faut configurer le DNS du tunel cloudflare pour chaque sous-domaine DNS souhaité en lui donnant une target dans le cluster. Cela se fait depuis Zero Trust -> Networks -> Tunnels -> Public hostname.
+On fait ensuite pointer tous nos subdomains names sur notre l'IP de notre Ingress d'entrée (pour l'instant port 80)
 
 ### 13. Challenge DNS
 
@@ -180,6 +180,40 @@ Puis on redémarre argocd :
 k rollout restart deployment argocd-server -n argocd
 ```
 
+### 15. Déployer méta
+
+On peut maintenant déployer méta et voir la magie se faire. Pour apprécier le déploiement, mieux vaut d'abord déployer l'ingress d'argocd pour pouvoir regarder l'ui pendant le déploiement 
+```bash
+k apply -f argocd/argocd-ingress.yaml
+```
+```bash
+k apply -f argocd/apps-meta.yaml
+```
+
+### 16. SealedSecrets
+
+Pour permettre de garder une approche GitOps sans pour autant exposer ses secrets, on a 2 solutions : 
+* Faire des SealedSecrets qui ne seront déchiffrables que par un controller de notre cluster
+* Un ESO (type Vault) mais c'est un peu overkill ici
+
+On installe donc le controller pour les sealed secret (celui qui aura la clé privée)
+```bash
+k apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.27.0/controller.yaml
+```
+
+On installe kubeseal pour chiffrer en local (avec la clé publique)
+```bash
+wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.18.0/kubeseal-0.18.0-linux-amd64.tar.gz
+tar -xzf kubeseal-0.18.0-linux-amd64.tar.gz && sudo install -m 755 kubeseal /usr/local/bin/kubeseal && rm kubeseal kubeseal-0.18.0-linux-amd64.tar.gz
+```
+
+Maintenant on peut créer des secrets en local, les transformer en SealedSecret et push le sealed-secret dans le repo
+```bash
+kubectl create -f secret.yaml --dry-run=client -o json | kubeseal --format yaml > sealed-secret.yaml
+```
+Le secret sera automatiquement déchiffré par le controller et créé lors du Sync
+
+
 
 <!-- ### 14. SSH à travers le tunnel
 
@@ -197,14 +231,3 @@ Host ssh.mdlmr.fr
 Le serveur est maintenant accessible depuis `ssh login@ssh.mdlm.fr`
 
 ### 15. Kubectl à travers le tunnel -->
-
-
-
-### Fin. Déployer meta 
-
-```bash
-k create namespace meta
-k apply -f argocd/apps-meta.yaml
-```
-
--> Il devrait apparaitre sur l'UI et commencer à tout créer
