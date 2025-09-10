@@ -5,6 +5,8 @@ namespace: infra
 
 resources:
   - cert-manager/cluster-issuer.yaml
+  - cloudflared/cloudflare-api-token-sealed-secret.yaml
+  - cloudflared/cloudflare-tunnel-token-sealed-secret.yaml
   - cloudflared/cloudflared-tunnel.yaml
   - ingress/website-ingress.yaml
   - website/website-deployment.yaml
