@@ -11,6 +11,7 @@ resources:
   - ingress/website-ingress.yaml
   - website/website-deployment.yaml
   - website/website-service.yaml
+  - apps-monitoring.yaml
 
 labels:
   - pairs:

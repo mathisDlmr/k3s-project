@@ -180,7 +180,21 @@ Puis on redémarre argocd :
 k rollout restart deployment argocd-server -n argocd
 ```
 
-### 15. Déployer méta
+### 15. Monitoring
+
+```bash
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+helm upgrade --install kube-state-metrics prometheus-community/kube-state-metrics --namespace monitoring --create-namespace
+helm upgrade --install prometheus prometheus-community/prometheus --namespace monitoring
+helm upgrade --install grafana grafana/grafana --namespace monitoring
+kubectl get secret grafana -n monitoring -o jsonpath="{.data.admin-password}" | base64 --decode
+kubectl port-forward svc/grafana -n monitoring 3000:80
+```
+
+### 16. Déployer méta
 
 On peut maintenant déployer méta et voir la magie se faire. Pour apprécier le déploiement, mieux vaut d'abord déployer l'ingress d'argocd pour pouvoir regarder l'ui pendant le déploiement 
 ```bash
@@ -190,7 +204,7 @@ k apply -f argocd/argocd-ingress.yaml
 k apply -f argocd/apps-meta.yaml
 ```
 
-### 16. SealedSecrets
+### 17. SealedSecrets
 
 Pour permettre de garder une approche GitOps sans pour autant exposer ses secrets, on a 2 solutions : 
 * Faire des SealedSecrets qui ne seront déchiffrables que par un controller de notre cluster

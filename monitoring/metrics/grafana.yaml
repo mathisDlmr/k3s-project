@@ -1,0 +1,112 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: monitoring
+spec:
+  project: default
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    chart: grafana
+    targetRevision: 8.5.2
+    helm:
+      releaseName: grafana
+      values: |
+        persistence:
+          type: pvc
+          enabled: true
+          size: 5Gi
+          storageClassName: "local-path"
+
+        datasources:
+          datasources.yaml:
+            apiVersion: 1
+            datasources:
+              - name: Prometheus
+                type: prometheus
+                uid: prometheus
+                url: http://prometheus-server.monitoring.svc.cluster.local:80
+                access: proxy
+                isDefault: true
+                basicAuth: false
+                editable: true
+                jsonData:
+                  timeInterval: "30s"
+                  queryTimeout: "60s"
+
+        dashboardProviders:
+          dashboardproviders.yaml:
+            apiVersion: 1
+            providers:
+              - name: 'default'
+                orgId: 1
+                folder: ''
+                type: file
+                disableDeletion: false
+                editable: true
+                updateIntervalSeconds: 10
+                allowUiUpdates: true
+                options:
+                  path: /var/lib/grafana/dashboards/default
+              - name: 'kubernetes'
+                orgId: 1
+                folder: 'Kubernetes'
+                type: file
+                disableDeletion: false
+                editable: true
+                updateIntervalSeconds: 10
+                allowUiUpdates: true
+                options:
+                  path: /var/lib/grafana/dashboards/kubernetes  
+
+        dashboardsConfigMaps:
+          kubernetes: grafana-dashboard-kubernetes-cluster-monitoring,grafana-dashboard-kube-state-metrics
+
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+
+        service:
+          type: ClusterIP
+          port: 80
+
+        securityContext:
+          runAsUser: 472
+          runAsGroup: 472
+          fsGroup: 472
+
+        plugins:
+          - grafana-piechart-panel
+          - grafana-worldmap-panel
+
+        grafana.ini:
+          server:
+            root_url: "%(protocol)s://%(domain)s/grafana/"
+            serve_from_sub_path: true
+          security:
+            admin_user: admin
+            admin_password: admin123
+          dashboards:
+            default_home_dashboard_path: /var/lib/grafana/dashboards/kubernetes/kubernetes-cluster-monitoring.json
+
+        sidecar:
+          dashboards:
+            enabled: true
+            label: grafana_dashboard
+            folder: /tmp/dashboards
+            defaultFolderName: default
+            searchNamespace: monitoring
+          datasources:
+            enabled: true
+            label: grafana_datasource
+            searchNamespace: monitoring
+
+        extraVolumeMounts:
+          - name: grafana-storage
+            mountPath: /var/lib/grafana
