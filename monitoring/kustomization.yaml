@@ -8,11 +8,12 @@ namespace: monitoring
 
 resources:
   # Applications de monitoring
-  - kube-state-metrics.yaml  
-  - prometheus.yaml
-  - grafana.yaml 
-  - grafana-datasources-configmap.yaml
-  - grafana-dashboards-configmap.yaml
+  - metrics/kube-state-metrics.yaml  
+  - metrics/prometheus.yaml
+  - metrics/grafana.yaml 
+  - metrics/grafana-datasources-configmap.yaml
+  - metrics/grafana-dashboards-configmap.yaml
 
-commonLabels:
-  app.kubernetes.io/part-of: monitoring
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: monitoring
