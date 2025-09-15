@@ -9,12 +9,12 @@ spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: grafana
+    namespace: monitoring
     
   syncPolicy:
     automated:
       prune: true
-      selfHeal: tru
+      selfHeal: true
 
   source:
     repoURL: https://grafana.github.io/helm-charts
