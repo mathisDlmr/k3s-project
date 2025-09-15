@@ -9,3 +9,5 @@ spec:
     server: '*'
   sourceRepos:
   - '*'
+  sourceNamespaces:   # Allow applications to be created in other namespaces
+  - 'monitoring'
