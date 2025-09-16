@@ -227,7 +227,10 @@ kubectl create -f secret.yaml --dry-run=client -o json | kubeseal --format yaml 
 ```
 Le secret sera automatiquement déchiffré par le controller et créé lors du Sync
 
-
+_En cas d'erreur de certificat_
+```bash
+kubeseal --format yaml --cert <(kubeseal --fetch-cert --controller-name=sealed-secrets-controller --controller-namespace=kube-system)
+```
 
 <!-- ### 14. SSH à travers le tunnel
 

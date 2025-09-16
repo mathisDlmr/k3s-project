@@ -8,10 +8,6 @@ metadata:
 spec:
   project: default
 
-  admin:
-    existingSecret: grafana-admin-secret
-    existingSecretPasswordKey: admin-password
-
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
@@ -28,6 +24,11 @@ spec:
     helm:
       releaseName: grafana
       values: |
+        admin:
+          existingSecret: grafana-admin-secret
+          existingSecretUserKey: admin-user
+          existingSecretPasswordKey: admin-password
+
         persistence:
           type: pvc
           enabled: true
@@ -74,9 +75,6 @@ spec:
                 allowUiUpdates: true
                 options:
                   path: /var/lib/grafana/dashboards/kubernetes  
-
-        dashboardsConfigMaps:
-          kubernetes: grafana-dashboard-kubernetes-cluster-monitoring,grafana-dashboard-kube-state-metrics
 
         resources:
           limits:
