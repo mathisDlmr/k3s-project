@@ -7,6 +7,11 @@ metadata:
     app.kubernetes.io/part-of: monitoring
 spec:
   project: default
+
+  admin:
+    existingSecret: grafana-admin-secret
+    existingSecretPasswordKey: admin-password
+
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
