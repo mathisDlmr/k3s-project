@@ -117,7 +117,3 @@ spec:
             enabled: true
             label: grafana_datasource
             searchNamespace: monitoring
-
-        extraVolumeMounts:
-          - name: grafana-storage
-            mountPath: /var/lib/grafana
