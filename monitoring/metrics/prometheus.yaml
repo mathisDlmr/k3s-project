@@ -28,9 +28,6 @@ spec:
       releaseName: prometheus
       values: |
         server:
-          extraArgs:
-            web.enable-lifecycle: false
-
           persistentVolume:
             enabled: true
             size: 10Gi
@@ -63,6 +60,3 @@ spec:
           
         kubeStateMetrics:
           enabled: false
-          
-        # Configuration Prometheus personnalisée via ConfigMap séparé
-        # La configuration par défaut de Helm sera utilisée
