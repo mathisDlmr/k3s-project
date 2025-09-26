@@ -28,6 +28,8 @@ spec:
       releaseName: prometheus
       values: |
         server:
+          configMap: "prometheus-server-custom"
+          
           persistentVolume:
             enabled: true
             size: 10Gi
