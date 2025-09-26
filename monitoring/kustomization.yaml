@@ -10,6 +10,7 @@ resources:
   # Applications de monitoring
   - metrics/kube-state-metrics.yaml  
   - metrics/prometheus.yaml
+  - metrics/prometheus-config.yaml
   - metrics/grafana.yaml 
   - metrics/grafana-admin-sealed-secret.yaml
   - metrics/grafana-datasources-configmap.yaml
