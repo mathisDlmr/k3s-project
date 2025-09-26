@@ -28,7 +28,8 @@ spec:
       releaseName: prometheus
       values: |
         server:
-          extraArgs: {}
+          extraArgs:
+            web.enable-lifecycle: false
 
           persistentVolume:
             enabled: true
