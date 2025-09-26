@@ -29,7 +29,7 @@ spec:
       values: |
         server:
           extraArgs:
-            web.enable-lifecycle: "true"
+            web.enable-lifecycle: ""
 
           persistentVolume:
             enabled: true
