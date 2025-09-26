@@ -28,7 +28,14 @@ spec:
       releaseName: prometheus
       values: |
         server:
-          configMap: "prometheus-server-custom"
+          extraVolumes:
+            - name: custom-prometheus-config
+              configMap:
+                name: prometheus-server-custom
+          extraVolumeMounts:
+            - name: custom-prometheus-config
+              mountPath: /etc/config/prometheus.yml
+              subPath: prometheus.yml
           
           persistentVolume:
             enabled: true
