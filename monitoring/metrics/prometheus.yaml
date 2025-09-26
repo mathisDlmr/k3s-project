@@ -29,12 +29,12 @@ spec:
       values: |
         server:
           extraArgs:
-            web.enable-lifecycle: ""
+            web.enable-lifecycle: "true"
 
           persistentVolume:
             enabled: true
             size: 10Gi
-            storageClass: "local-path"*
+            storageClass: "local-path"
 
           resources:
             limits:
@@ -69,6 +69,8 @@ spec:
             global:
               scrape_interval: 15s
               evaluation_interval: 15s
+            rule_files:
+              - "crd/*/*.yml"
             scrape_configs:
               - job_name: 'prometheus'
                 static_configs:
