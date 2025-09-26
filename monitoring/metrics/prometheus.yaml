@@ -28,10 +28,14 @@ spec:
       releaseName: prometheus
       values: |
         server:
+          extraArgs:
+            web.enable-lifecycle: ""
+
           persistentVolume:
             enabled: true
             size: 10Gi
-            storageClass: "local-path"
+            storageClass: "local-path"*
+
           resources:
             limits:
               cpu: 500m
@@ -39,6 +43,7 @@ spec:
             requests:
               cpu: 100m
               memory: 256Mi
+
           retention: "15d"
           service:
             type: ClusterIP
@@ -64,8 +69,6 @@ spec:
             global:
               scrape_interval: 15s
               evaluation_interval: 15s
-            rule_files:
-              - "crd/*/*.yml"
             scrape_configs:
               - job_name: 'prometheus'
                 static_configs:
@@ -128,3 +131,8 @@ spec:
               - job_name: 'kube-state-metrics'
                 static_configs:
                   - targets: ['kube-state-metrics.monitoring.svc.cluster.local:8080']
+
+              - job_name: 'laravel-app'
+                metrics_path: '/skiutc/metrics'
+                static_configs:
+                  - targets: ['skiut-backend.skiut.svc.cluster.local:80']
