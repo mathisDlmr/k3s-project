@@ -21,52 +21,10 @@ spec:
       - ServerSideApply=true
 
   source:
-    repoURL: https://prometheus-community.github.io/helm-charts
-    chart: prometheus
-    targetRevision: 25.27.0
+    repoURL: https://github.com/mathisDlmr/k3s-project.git
+    path: monitoring/metrics
+    targetRevision: main
     helm:
       releaseName: prometheus
-      values: |
-        server:
-          configMap: false
-          extraVolumes:
-            - name: custom-prometheus-config
-              configMap:
-                name: prometheus-server-custom
-          extraVolumeMounts:
-            - name: custom-prometheus-config
-              mountPath: /etc/config/prometheus.yml
-              subPath: prometheus.yml
-          
-          persistentVolume:
-            enabled: true
-            size: 10Gi
-            storageClass: "local-path"
-
-          resources:
-            limits:
-              cpu: 500m
-              memory: 512Mi
-            requests:
-              cpu: 100m
-              memory: 256Mi
-
-          retention: "15d"
-          service:
-            type: ClusterIP
-        
-        alertmanager:
-          enabled: true
-          persistentVolume:
-            enabled: true
-            size: 2Gi
-            storageClass: "local-path"
-          
-        nodeExporter:
-          enabled: true
-          
-        pushgateway:
-          enabled: false
-          
-        kubeStateMetrics:
-          enabled: false
+      valueFiles:
+        - prometheus-values.yaml
