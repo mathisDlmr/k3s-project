@@ -26,6 +26,8 @@ spec:
             cpu: 500m
             memory: 256Mi
         env:
+        - name: LOG_CHANNEL
+          value: stderr
         - name: DB_CONNECTION
           value: mysql
         - name: DB_HOST
