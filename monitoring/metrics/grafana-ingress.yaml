@@ -5,20 +5,21 @@ metadata:
   namespace: monitoring
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: cluster-issuer
 spec:
   rules:
   - host: grafana.mdlmr.fr
     http:
       paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: grafana
-              port:
-                number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 80
+              
   tls:
   - hosts:
     - grafana.mdlmr.fr
-    secretName: grafana-ingress-tls
+    secretName: grafana-mdlmr-fr-tls

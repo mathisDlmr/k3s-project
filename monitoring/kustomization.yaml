@@ -15,6 +15,7 @@ resources:
   - metrics/grafana-admin-sealed-secret.yaml
   - metrics/grafana-datasources-configmap.yaml
   - metrics/grafana-dashboards-configmap.yaml
+  - metrics/grafana-ingress.yaml
 
 labels:
   - pairs:
