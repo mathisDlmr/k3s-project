@@ -34,8 +34,11 @@ spec:
                 name: prometheus-server-custom
           extraVolumeMounts:
             - name: custom-prometheus-config
-              mountPath: /etc/config/prometheus.yml
+              mountPath: /etc/custom-config/prometheus.yml
               subPath: prometheus.yml
+          
+          extraArgs:
+            config.file: "/etc/custom-config/prometheus.yml"
           
           persistentVolume:
             enabled: true
