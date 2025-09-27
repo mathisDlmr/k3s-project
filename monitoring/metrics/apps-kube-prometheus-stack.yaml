@@ -57,9 +57,6 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: monitoring
   syncPolicy:
-    automated:
-      selfHeal: true
-      prune: true
     syncOptions:
       - CreateNamespace=true
       - ApplyOutOfSyncOnly=true
@@ -71,16 +68,3 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m
-  ignoreDifferences:
-    - group: apps
-      kind: StatefulSet
-      name: alertmanager-monitoring-stack-kube-prom-alertmanager
-      namespace: monitoring
-      jsonPointers:
-        - /spec/template
-    - group: apps
-      kind: StatefulSet
-      name: prometheus-monitoring-stack-kube-prom-prometheus
-      namespace: monitoring
-      jsonPointers:
-        - /spec/template
