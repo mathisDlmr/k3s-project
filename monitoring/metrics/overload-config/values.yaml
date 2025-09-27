@@ -1,0 +1,51 @@
+# Configuration Helm pour kube-prometheus-stack
+# Désactive complètement les règles par défaut pour éviter les conflits avec k3s
+
+crds:
+  enabled: false   # CRDs gérés séparément par prometheus-crds app
+
+# Désactiver complètement les règles par défaut
+defaultRules:
+  create: false
+
+# Configuration Prometheus
+prometheus:
+  serviceAccount:
+    create: true
+    name: monitoring-stack-kube-prom-prometheus
+  prometheusSpec:
+    replicas: 1
+    scrapeInterval: 30s
+    evaluationInterval: 30s
+    serviceMonitorSelector: {}
+    serviceMonitorNamespaceSelector: {}
+    ruleSelector: {}
+    ruleNamespaceSelector: {}
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          resources:
+            requests:
+              storage: 20Gi
+
+# Configuration Grafana
+grafana:
+  defaultDashboardsTimezone: "Europe/Paris"
+  admin:
+    existingSecret: grafana-admin-secret
+    existingSecretUserKey: admin-user
+    existingSecretPasswordKey: admin-password
+  grafana.ini:
+    server:
+      root_url: "%(protocol)s://%(domain)s/"
+
+# Désactiver les composants qui ne sont pas nécessaires pour k3s
+kubeControllerManager:
+  enabled: false
+kubeProxy:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeEtcd:
+  enabled: false

@@ -15,47 +15,8 @@ spec:
       chart: kube-prometheus-stack
       targetRevision: "77.11.1"
       helm:
-        values: |
-          crds:
-            enabled: false   # CRDs gérés séparément par prometheus-crds app
-          defaultRules:
-            create: true
-            rules:
-              kubelet: true
-              kubernetesResources: true
-              kubernetesApps: true
-              kubernetesStorage: true
-              kubernetesSystem: true
-              etcd: true
-              k8s: true
-          prometheus:
-            serviceAccount:
-              create: true
-              name: monitoring-stack-kube-prom-prometheus
-            prometheusSpec:
-              replicas: 1
-              scrapeInterval: 30s
-              evaluationInterval: 30s
-              serviceMonitorSelector: {}
-              serviceMonitorNamespaceSelector: {}
-              ruleSelector: {}
-              ruleNamespaceSelector: {}
-              storageSpec:
-                volumeClaimTemplate:
-                  spec:
-                    storageClassName: local-path
-                    resources:
-                      requests:
-                        storage: 20Gi
-          grafana:
-            defaultDashboardsTimezone: "Europe/Paris"
-            admin:
-              existingSecret: grafana-admin-secret
-              existingSecretUserKey: admin-user
-              existingSecretPasswordKey: admin-password
-            grafana.ini:
-              server:
-                root_url: "%(protocol)s://%(domain)s/"
+        valueFiles:
+          - values.yaml
 
   destination:
     server: "https://kubernetes.default.svc"
