@@ -28,6 +28,12 @@ spec:
               KubeProxyDown: true
               KubeSchedulerDown: true
               CPUThrottlingHigh: true
+          kubelet:
+            serviceMonitor:
+              selector:
+                matchLabels:
+                  app.kubernetes.io/name: kubelet
+                  app.kubernetes.io/instance: monitoring-stack
           prometheus:
             serviceAccount:
               create: true
