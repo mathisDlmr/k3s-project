@@ -15,8 +15,49 @@ spec:
       chart: kube-prometheus-stack
       targetRevision: "77.11.1"
       helm:
-        valueFiles:
-          - values.yaml
+        values: |
+          defaultRules:
+            create: true
+            rules:
+              kubelet: true
+              kubernetesResources: true
+              kubernetesApps: true
+              kubernetesStorage: true
+              kubernetesSystem: true
+              etcd: true
+              k8s: true
+              kubeControllerManager: false   # Règles problématiques pour k3s
+              kubeProxy: false
+              kubeSchedulerAlerting: false
+            disabled:
+              KubeControllerManagerDown: true
+              KubeProxyDown: true
+              KubeSchedulerDown: true       # Jusqu'à ici toutes les règles sont problm avec k3s
+          prometheus:
+            prometheusSpec:
+              replicas: 1
+              scrapeInterval: 30s
+              evaluationInterval: 30s
+              serviceMonitorSelector: {}
+              serviceMonitorNamespaceSelector: {}
+              ruleSelector: {}
+              ruleNamespaceSelector: {}
+              storageSpec:
+                volumeClaimTemplate:
+                  spec:
+                    storageClassName: local-path
+                    resources:
+                      requests:
+                        storage: 20Gi
+          grafana:
+            defaultDashboardsTimezone: "Europe/Paris"
+            admin:
+              existingSecret: grafana-admin-secret
+              existingSecretUserKey: admin-user
+              existingSecretPasswordKey: admin-password
+            grafana.ini:
+              server:
+                root_url: "%(protocol)s://%(domain)s/"
 
   destination:
     server: "https://kubernetes.default.svc"

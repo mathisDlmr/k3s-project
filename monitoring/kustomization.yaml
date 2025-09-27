@@ -7,7 +7,6 @@ namespace: monitoring
 # Status page : Uptime Kuma (à venir)
 
 resources:
-  - metrics/apps-prometheus-crds.yaml
   - metrics/apps-prometheus-config.yaml
   - metrics/apps-kube-prometheus-stack.yaml
 
