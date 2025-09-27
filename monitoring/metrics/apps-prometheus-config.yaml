@@ -16,9 +16,9 @@ spec:
     # - repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
     #   targetRevision: main
     #   path: monitoring/metrics/alert-manager/
-    # - repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
-    #   targetRevision: main
-    #   path: monitoring/metrics/rules/
+    - repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
+      targetRevision: main
+      path: monitoring/metrics/rules/
     - repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
       targetRevision: main
       path: monitoring/metrics/service-monitors/
