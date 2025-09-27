@@ -18,12 +18,13 @@ spec:
     scheme: https
     tlsConfig:
       insecureSkipVerify: true
+    bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
     interval: 30s
     path: /metrics
-  - port: http-metrics
-    scheme: http
-    interval: 30s
-    path: /metrics
+    honorLabels: true
+    relabelings:
+    - sourceLabels: [__metrics_path__]
+      targetLabel: metrics_path
   namespaceSelector:
     matchNames:
     - kube-system
