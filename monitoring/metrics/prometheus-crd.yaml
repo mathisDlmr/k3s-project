@@ -1,0 +1,54 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: k8s
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/part-of: monitoring
+spec:
+  replicas: 1
+  evaluationInterval: 30s
+  scrapeInterval: 30s
+  
+  # Configuration de stockage
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: local-path
+        resources:
+          requests:
+            storage: 10Gi
+  
+  # Ressources
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  
+  # Rétention des données
+  retention: 15d
+  
+  # Configuration personnalisée via ConfigMap
+  additionalScrapeConfigs:
+    name: prometheus-server-custom
+    key: prometheus.yml
+  
+  # Service monitor pour auto-découverte
+  serviceMonitorSelector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus
+  
+  # Règles d'alerte
+  ruleSelector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus
+  
+  # Configuration Alertmanager
+  alerting:
+    alertmanagers:
+    - namespace: monitoring
+      name: alertmanager-main
+      port: web
