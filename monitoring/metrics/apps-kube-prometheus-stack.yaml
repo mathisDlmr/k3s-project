@@ -71,3 +71,16 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m
+  ignoreDifferences:
+    - group: apps
+      kind: StatefulSet
+      name: alertmanager-monitoring-stack-kube-prom-alertmanager
+      namespace: monitoring
+      jsonPointers:
+        - /spec/template
+    - group: apps
+      kind: StatefulSet
+      name: prometheus-monitoring-stack-kube-prom-prometheus
+      namespace: monitoring
+      jsonPointers:
+        - /spec/template
