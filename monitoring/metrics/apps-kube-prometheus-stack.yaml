@@ -33,6 +33,7 @@ spec:
               KubeControllerManagerDown: true
               KubeProxyDown: true
               KubeSchedulerDown: true       # Jusqu'à ici toutes les règles sont problm avec k3s
+              CPUThrottlingHigh: true
           prometheus:
             prometheusSpec:
               replicas: 1
