@@ -1,0 +1,304 @@
+# CRDs du Prometheus Operator - version séparée pour éviter les problèmes de taille d'annotations
+# Source: https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.75.2/bundle.yaml
+# Extrait uniquement des CRDs pour éviter les problèmes de taille d'annotations
+
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: alertmanagers.monitoring.coreos.com
+spec:
+  group: monitoring.coreos.com
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              replicas:
+                type: integer
+                minimum: 1
+              storage:
+                type: object
+                properties:
+                  volumeClaimTemplate:
+                    type: object
+                    properties:
+                      spec:
+                        type: object
+                        properties:
+                          storageClassName:
+                            type: string
+                          resources:
+                            type: object
+                            properties:
+                              requests:
+                                type: object
+                                properties:
+                                  storage:
+                                    type: string
+              resources:
+                type: object
+                properties:
+                  limits:
+                    type: object
+                    properties:
+                      cpu:
+                        type: string
+                      memory:
+                        type: string
+                  requests:
+                    type: object
+                    properties:
+                      cpu:
+                        type: string
+                      memory:
+                        type: string
+              retention:
+                type: string
+              additionalScrapeConfigs:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  key:
+                    type: string
+              serviceMonitorSelector:
+                type: object
+                properties:
+                  matchLabels:
+                    type: object
+              ruleSelector:
+                type: object
+                properties:
+                  matchLabels:
+                    type: object
+              alerting:
+                type: object
+                properties:
+                  alertmanagers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        namespace:
+                          type: string
+                        name:
+                          type: string
+                        port:
+                          type: string
+  scope: Namespaced
+  names:
+    plural: alertmanagers
+    singular: alertmanager
+    kind: Alertmanager
+    shortNames:
+    - am
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: prometheuses.monitoring.coreos.com
+spec:
+  group: monitoring.coreos.com
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              replicas:
+                type: integer
+                minimum: 1
+              storage:
+                type: object
+                properties:
+                  volumeClaimTemplate:
+                    type: object
+                    properties:
+                      spec:
+                        type: object
+                        properties:
+                          storageClassName:
+                            type: string
+                          resources:
+                            type: object
+                            properties:
+                              requests:
+                                type: object
+                                properties:
+                                  storage:
+                                    type: string
+              resources:
+                type: object
+                properties:
+                  limits:
+                    type: object
+                    properties:
+                      cpu:
+                        type: string
+                      memory:
+                        type: string
+                  requests:
+                    type: object
+                    properties:
+                      cpu:
+                        type: string
+                      memory:
+                        type: string
+              retention:
+                type: string
+              evaluationInterval:
+                type: string
+              scrapeInterval:
+                type: string
+              additionalScrapeConfigs:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  key:
+                    type: string
+              serviceMonitorSelector:
+                type: object
+                properties:
+                  matchLabels:
+                    type: object
+              ruleSelector:
+                type: object
+                properties:
+                  matchLabels:
+                    type: object
+              alerting:
+                type: object
+                properties:
+                  alertmanagers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        namespace:
+                          type: string
+                        name:
+                          type: string
+                        port:
+                          type: string
+  scope: Namespaced
+  names:
+    plural: prometheuses
+    singular: prometheus
+    kind: Prometheus
+    shortNames:
+    - prom
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: servicemonitors.monitoring.coreos.com
+spec:
+  group: monitoring.coreos.com
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              selector:
+                type: object
+                properties:
+                  matchLabels:
+                    type: object
+              endpoints:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    port:
+                      type: string
+                    path:
+                      type: string
+                    interval:
+                      type: string
+                    scrapeTimeout:
+                      type: string
+              jobLabel:
+                type: string
+              targetLabels:
+                type: array
+                items:
+                  type: string
+              podTargetLabels:
+                type: array
+                items:
+                  type: string
+  scope: Namespaced
+  names:
+    plural: servicemonitors
+    singular: servicemonitor
+    kind: ServiceMonitor
+    shortNames:
+    - smon
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: prometheusrules.monitoring.coreos.com
+spec:
+  group: monitoring.coreos.com
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              groups:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    rules:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          alert:
+                            type: string
+                          expr:
+                            type: string
+                          for:
+                            type: string
+                          labels:
+                            type: object
+                          annotations:
+                            type: object
+  scope: Namespaced
+  names:
+    plural: prometheusrules
+    singular: prometheusrule
+    kind: PrometheusRule
+    shortNames:
+    - promrule

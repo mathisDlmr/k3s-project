@@ -36,15 +36,11 @@ spec:
     name: prometheus-scrape-config
     key: prometheus-additional.yaml
   
-  # Service monitor pour auto-découverte
-  serviceMonitorSelector:
-    matchLabels:
-      app.kubernetes.io/name: prometheus
+  # Service monitor pour auto-découverte (sélectionner tous)
+  serviceMonitorSelector: {}
   
-  # Règles d'alerte
-  ruleSelector:
-    matchLabels:
-      app.kubernetes.io/name: prometheus
+  # Règles d'alerte (sélectionner tous)
+  ruleSelector: {}
   
   # Configuration Alertmanager
   alerting:
