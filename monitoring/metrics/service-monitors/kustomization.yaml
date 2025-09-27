@@ -4,11 +4,11 @@ kind: Kustomization
 namespace: monitoring
 
 resources:
-  # - k3s-kubelet-servicemonitor.yaml
-  # - k3s-servicemonitor.yaml
-  # - k3s-kube-proxy-servicemonitor.yaml
-  # - k3s-coredns-servicemonitor.yaml
-  # - node-exporter-servicemonitor.yaml
+  - k3s-kubelet-servicemonitor.yaml
+  - k3s-servicemonitor.yaml
+  - k3s-kube-proxy-servicemonitor.yaml
+  - k3s-coredns-servicemonitor.yaml
+  - node-exporter-servicemonitor.yaml
   - skiut-backend-servicemonitor.yaml
   - skiut-mysql-servicemonitor.yaml
 
