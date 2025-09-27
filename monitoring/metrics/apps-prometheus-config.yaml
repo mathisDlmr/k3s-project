@@ -15,13 +15,13 @@ spec:
   sources:
     # - repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
     #   targetRevision: main
-    #   path: monitoring/metrics/prometheus/alert-manager/
+    #   path: monitoring/metrics/alert-manager/
     # - repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
     #   targetRevision: main
-    #   path: monitoring/metrics/prometheus/rules/
+    #   path: monitoring/metrics/rules/
     - repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
       targetRevision: main
-      path: monitoring/metrics/prometheus/service-monitors/
+      path: monitoring/metrics/service-monitors/
   syncPolicy:
     automated:
       prune: true

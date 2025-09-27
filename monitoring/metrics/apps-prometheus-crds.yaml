@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: grafana
+  name: prometheus-crds
   namespace: argocd
   labels:
     app.kubernetes.io/part-of: monitoring
   annotations:
-    description: "Application grafana - S'occupe de l'application Grafana (monitoring, etc.)"
+    description: "Définition des CRDs pour Prometheus"
 spec:
   project: default
   destination:
@@ -15,7 +15,7 @@ spec:
   source:
     repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
     targetRevision: main
-    path: monitoring/metrics/grafana/
+    path: monitoring/metrics/crds/
   syncPolicy:
     automated:
       prune: true
