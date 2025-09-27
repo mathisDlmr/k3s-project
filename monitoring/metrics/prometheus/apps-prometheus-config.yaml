@@ -21,7 +21,7 @@ spec:
     #   path: monitoring/metrics/prometheus/rules/
     - repoURL: 'https://github.com/mathisDlmr/k3s-project.git'
       targetRevision: main
-      path: monitoring/metrics/prometheus/service-monitor/
+      path: monitoring/metrics/prometheus/service-monitors/
   syncPolicy:
     automated:
       prune: true
