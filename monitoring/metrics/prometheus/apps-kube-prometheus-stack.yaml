@@ -17,6 +17,8 @@ spec:
           enabled: false   # CRDs gérés séparément par prometheus-crds app
         prometheus:
           prometheusSpec:
+            serviceAccountName: monitoring-stack-kube-prom-prometheus
+            automountServiceAccountToken: true
             replicas: 1
             scrapeInterval: 30s
             evaluationInterval: 30s
