@@ -22,11 +22,14 @@ spec:
               kubeControllerManager: false   # Règles problématiques pour k3s
               kubeProxy: false
               kubeSchedulerAlerting: false
+              alertmanager: false
             disabled:
               KubeControllerManagerDown: true
               KubeProxyDown: true
               KubeSchedulerDown: true       # Jusqu'à ici toutes les règles sont problm avec k3s
               CPUThrottlingHigh: true
+              AlertmanagerDown: true
+              AlertmanagerClusterDown: true
           prometheus:
             prometheusSpec:
               replicas: 1
@@ -43,6 +46,8 @@ spec:
                     resources:
                       requests:
                         storage: 20Gi
+          alertmanager:
+            enabled: false
           grafana:
             defaultDashboardsTimezone: "Europe/Paris"
             admin:
@@ -57,6 +62,9 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: monitoring
   syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
     syncOptions:
       - CreateNamespace=true
       - ApplyOutOfSyncOnly=true
