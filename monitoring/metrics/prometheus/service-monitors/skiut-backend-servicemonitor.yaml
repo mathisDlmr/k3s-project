@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: skiut-backend-monitor
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/part-of: monitoring
+    app.kubernetes.io/name: skiut-backend-monitor
+    app.kubernetes.io/component: servicemonitor
+  annotations:
+    description: "ServiceMonitor pour surveiller l'application skiut-backend"
+spec:
+  selector:
+    matchLabels:
+      app: skiut-backend
+  endpoints:
+  - port: http
+    scheme: http
+    interval: 30s
+    path: /metrics
+    honorLabels: true
+  namespaceSelector:
+    matchNames:
+    - skiut
+  jobLabel: app

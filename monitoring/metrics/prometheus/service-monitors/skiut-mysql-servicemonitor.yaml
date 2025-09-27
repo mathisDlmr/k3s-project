@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: skiut-mysql-monitor
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/part-of: monitoring
+    app.kubernetes.io/name: skiut-mysql-monitor
+    app.kubernetes.io/component: servicemonitor
+  annotations:
+    description: "ServiceMonitor pour surveiller la base de données MySQL de skiut"
+spec:
+  selector:
+    matchLabels:
+      app: skiut-database
+  endpoints:
+  - port: mysql
+    scheme: http
+    interval: 30s
+    path: /metrics
+    honorLabels: true
+  namespaceSelector:
+    matchNames:
+    - skiut
+  jobLabel: app

@@ -2,22 +2,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 namespace: monitoring
-# Metrics : Prometheus + Grafana + Kube-State-Metrics
+# Metrics : Kube-Prometheus-Stack + Grafana
 # Logs : Fluent Bit + Loki + Grafana (à venir)
 # Status page : Uptime Kuma (à venir)
 
 resources:
-  - metrics/kube-state-metrics.yaml  
-  - metrics/prometheus-operator-crds.yaml
-  - metrics/prometheus-operator-deployment.yaml
-  - metrics/prometheus-crd.yaml
-  - metrics/prometheus-scrape-config.yaml
-  - metrics/prometheus-servicemonitor.yaml
-  - metrics/grafana.yaml 
-  - metrics/grafana-admin-sealed-secret.yaml
-  - metrics/grafana-datasources-configmap.yaml
-  - metrics/grafana-dashboards-configmap.yaml
-  - metrics/grafana-ingress.yaml
+  - metrics/apps-prometheus.yaml
+  - metrics/apps-grafana.yaml
 
 labels:
   - pairs:

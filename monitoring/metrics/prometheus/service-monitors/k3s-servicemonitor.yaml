@@ -1,0 +1,30 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: k3s-cluster-monitor
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/part-of: monitoring
+    app.kubernetes.io/name: k3s-monitor
+    app.kubernetes.io/component: servicemonitor
+  annotations:
+    description: "ServiceMonitor pour surveiller le cluster k3s (kubelet, kube-proxy, etc.)"
+spec:
+  selector:
+    matchLabels:
+      k8s-app: kubelet
+  endpoints:
+  - port: https-metrics
+    scheme: https
+    tlsConfig:
+      insecureSkipVerify: true
+    interval: 30s
+    path: /metrics
+  - port: http-metrics
+    scheme: http
+    interval: 30s
+    path: /metrics
+  namespaceSelector:
+    matchNames:
+    - kube-system
+  jobLabel: k8s-app

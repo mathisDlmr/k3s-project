@@ -1,0 +1,24 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: k3s-coredns-monitor
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/part-of: monitoring
+    app.kubernetes.io/name: k3s-coredns-monitor
+    app.kubernetes.io/component: servicemonitor
+  annotations:
+    description: "ServiceMonitor pour surveiller CoreDNS dans k3s"
+spec:
+  selector:
+    matchLabels:
+      k8s-app: kube-dns
+  endpoints:
+  - port: metrics
+    scheme: http
+    interval: 30s
+    path: /metrics
+  namespaceSelector:
+    matchNames:
+    - kube-system
+  jobLabel: k8s-app
