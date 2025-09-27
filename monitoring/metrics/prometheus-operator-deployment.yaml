@@ -1,6 +1,3 @@
-# Déploiement du Prometheus Operator (sans les CRDs pour éviter les problèmes de taille)
-# Version simplifiée basée sur le bundle officiel
-
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -156,4 +153,3 @@ spec:
         fsGroup: 65534
         runAsNonRoot: true
         runAsUser: 65534
-      serviceAccountName: prometheus-operator
