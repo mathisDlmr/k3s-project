@@ -9,9 +9,10 @@ namespace: monitoring
 resources:
   # Applications de monitoring
   - metrics/kube-state-metrics.yaml  
+  - https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.75.2/bundle.yaml
   - metrics/prometheus-crd.yaml
+  - metrics/prometheus-scrape-config.yaml
   - metrics/prometheus-servicemonitor.yaml
-  - metrics/prometheus-config.yaml
   - metrics/grafana.yaml 
   - metrics/grafana-admin-sealed-secret.yaml
   - metrics/grafana-datasources-configmap.yaml

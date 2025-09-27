@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
-  name: k8s
+  name: prometheus-crd
   namespace: monitoring
   labels:
     app.kubernetes.io/part-of: monitoring
@@ -33,8 +33,8 @@ spec:
   
   # Configuration personnalisée via ConfigMap
   additionalScrapeConfigs:
-    name: prometheus-server-custom
-    key: prometheus.yml
+    name: prometheus-scrape-config
+    key: prometheus-additional.yaml
   
   # Service monitor pour auto-découverte
   serviceMonitorSelector:
