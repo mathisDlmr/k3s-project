@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: monitoring-stack
   namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: monitoring
 spec:
   project: default
   source:
@@ -15,6 +17,9 @@ spec:
           enabled: false   # CRDs gérés séparément par prometheus-crds app
         prometheus:
           prometheusSpec:
+            replicas: 1
+            scrapeInterval: 30s
+            evaluationInterval: 30s
             serviceMonitorSelector: {}
             serviceMonitorNamespaceSelector: {}
             ruleSelector: {}

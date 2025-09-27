@@ -17,7 +17,7 @@ spec:
   - port: http
     scheme: http
     interval: 30s
-    path: /metrics
+    path: /skiutc/metrics
     honorLabels: true
   namespaceSelector:
     matchNames:
