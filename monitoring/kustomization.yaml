@@ -3,7 +3,7 @@ kind: Kustomization
 
 namespace: monitoring
 # Metrics : Kube-Prometheus-Stack (Prom + Grafana + AlertManager)
-# Logs : Fluent Bit + Loki + Grafana (à venir)
+# Logs : Loki (Grafana + Promtail + logcli)
 # Status page : Uptime Kuma (à venir)
 
 resources:

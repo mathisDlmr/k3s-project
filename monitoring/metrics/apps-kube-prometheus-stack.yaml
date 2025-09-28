@@ -37,8 +37,10 @@ spec:
               evaluationInterval: 30s
               serviceMonitorSelector: {}
               serviceMonitorNamespaceSelector: {}
+              serviceMonitorSelectorNilUsesHelmValues: false
               ruleSelector: {}
               ruleNamespaceSelector: {}
+              ruleSelectorNilUsesHelmValues: false
               storageSpec:
                 volumeClaimTemplate:
                   spec:
