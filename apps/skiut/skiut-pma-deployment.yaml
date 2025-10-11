@@ -19,8 +19,6 @@ spec:
         ports:
         - containerPort: 80
         env:
-        - name: PMA_ABSOLUTE_URI
-          value: "https://skiut.mdlmr.fr/pma/"
         - name: PMA_HOST
           valueFrom:
             configMapKeyRef:
