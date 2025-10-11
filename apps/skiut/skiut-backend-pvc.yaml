@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: skiut-backend-storage
+  namespace: skiut
+  labels:
+    app: skiut-backend
+    app.kubernetes.io/name: skiut-backend
+    app.kubernetes.io/component: storage
+  annotations:
+    description: "PVC pour sauvegarder le dossier storage/app/private de l'application Laravel skiut-backend"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: local-path
