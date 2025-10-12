@@ -59,6 +59,8 @@ data:
         max_connections=1000
         connection_max_age_ms=300000
         wait_timeout=300000
+        monitor_username="proxysql_monitor"
+        monitor_password="${MYSQL_PROXY_MONITOR_PASSWORD}"
     }
     
     mysql_query_rules = ()
