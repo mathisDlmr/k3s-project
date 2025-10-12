@@ -15,12 +15,12 @@ spec:
     spec:
       containers:
       - name: skiut-backend
-        image: ghcr.io/ski-utc/server-skiut-2026:4baff260c351310b8de38a1584efab896d978e37
+        image: ghcr.io/ski-utc/server-skiut-2026:7d510fd44e59b41e46accf00fdea4d53a5ece8c7
         ports:
         - containerPort: 80
         resources:
           requests:
-            cpu: 200m 
+            cpu: 200m
             memory: 1Gi
           limits:
             cpu: 500m
