@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: skiut-backend
     app.kubernetes.io/component: storage
   annotations:
-    description: "PVC pour sauvegarder le dossier storage/app/private de l'application Laravel skiut-backend"
+    description: "PVC pour sauvegarder le dossier storage de l'application Laravel skiut-backend"
 spec:
   accessModes:
     - ReadWriteOnce
