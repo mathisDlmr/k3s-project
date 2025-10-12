@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: skiut-database-configmap
 data:
-  MYSQL_HOST: skiut-database-service
-  MYSQL_PORT: "3306"
+  MYSQL_HOST: skiut-proxysql-service
+  MYSQL_PORT: "6033"
   MYSQL_DB: skiut

@@ -4,7 +4,7 @@ metadata:
   name: skiut-backend
   namespace: skiut
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: skiut-backend
@@ -49,12 +49,15 @@ spec:
               name: skiut-database-configmap
               key: MYSQL_DB
         - name: DB_USERNAME
-          value: root
+          valueFrom:
+            secretKeyRef:
+              name: skiut-database-secret
+              key: MYSQL_USER
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: skiut-database-secret
-              key: MYSQL_ROOT_PASSWORD
+              key: MYSQL_PASSWORD
       volumes:
       - name: laravel-storage
         persistentVolumeClaim:

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skiut-proxysql
+  namespace: skiut
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: skiut-proxysql
+  template:
+    metadata:
+      labels:
+        app: skiut-proxysql
+    spec:
+      containers:
+      - name: skiut-proxysql
+        image: proxysql/proxysql:2.5
+        ports:
+        - containerPort: 6033
+        - containerPort: 6032
+        envFrom:
+        - configMapRef:
+            name: skiut-database-configmap
+        - secretRef:
+            name: skiut-database-secret
+        volumeMounts:
+        - name: proxysql-config
+          mountPath: /entrypoint.sh
+          subPath: entrypoint.sh
+        command: ["/bin/sh", "-c"]
+        args: ["/entrypoint.sh"]
+      volumes:
+      - name: proxysql-config
+        configMap:
+          name: skiut-proxysql-config
+          defaultMode: 0755
