@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: skiut-proxysql
-        image: proxysql/proxysql:2.5
+        image: proxysql/proxysql:3.0.2
         ports:
         - containerPort: 6033
         - containerPort: 6032
