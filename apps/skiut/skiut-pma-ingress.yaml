@@ -11,7 +11,7 @@ spec:
   - host: skiutpma.mdlmr.fr
     http:
       paths:
-        - path: /pma
+        - path: /
           pathType: Prefix
           backend:
             service:
