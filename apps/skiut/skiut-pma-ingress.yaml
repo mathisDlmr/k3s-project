@@ -1,24 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: skiut-ingress
+  name: skiut-pma-ingress
   namespace: skiut
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: skiut.mdlmr.fr
+  - host: skiutpma.mdlmr.fr
     http:
       paths:
-        - path: /
+        - path: /pma
           pathType: Prefix
           backend:
             service:
-              name: skiut-backend
+              name: skiut-pma
               port:
                 number: 80
   tls:
   - hosts:
-    - skiut.mdlmr.fr
-    secretName: skiut-ingress-tls
+    - skiutpma.mdlmr.fr
+    secretName: skiut-pma-ingress-tls
