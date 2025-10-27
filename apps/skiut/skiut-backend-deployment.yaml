@@ -58,6 +58,21 @@ spec:
             secretKeyRef:
               name: skiut-database-secret
               key: MYSQL_PASSWORD
+        - name: SIMDE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: skiut-backend-secret
+              key: SIMDE_KEY
+        - name: OAUTH_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: skiut-backend-secret
+              key: OAUTH_CLIENT_ID
+        - name: OAUTH_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: skiut-backend-secret
+              key: OAUTH_CLIENT_SECRET
       volumes:
       - name: laravel-storage
         persistentVolumeClaim:
