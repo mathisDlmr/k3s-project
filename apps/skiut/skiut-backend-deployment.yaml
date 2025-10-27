@@ -63,6 +63,16 @@ spec:
             secretKeyRef:
               name: skiut-backend-secret
               key: SIMDE_KEY
+        - name: OAUTH_REDIRECT_URI
+          valueFrom:
+            configMapKeyRef:
+              name: skiut-backend-configmap
+              key: OAUTH_REDIRECT_URI
+        - name: OAUTH_BACKOFFICE_REDIRECT_URI
+          valueFrom:
+            configMapKeyRef:
+              name: skiut-backend-configmap
+              key: OAUTH_BACKOFFICE_REDIRECT_URI
         - name: OAUTH_CLIENT_ID
           valueFrom:
             secretKeyRef:
