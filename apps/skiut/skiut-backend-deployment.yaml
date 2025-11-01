@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: skiut-backend
-        image: ghcr.io/ski-utc/server-skiut-2026:cb4b567ef81b34cb4d9a91c4c227af864092af3f
+        image: ghcr.io/ski-utc/server-skiut-2026:0a8b0fd8b44b5aae8eb43c82b059de9aaf238f66
         ports:
         - containerPort: 80
         resources:
@@ -31,6 +31,8 @@ spec:
         env:
         - name: LOG_CHANNEL
           value: stderr
+        - name: APP_ENV
+          value: production
         - name: APP_URL
           value: https://skiut.mdlmr.fr
         - name: DB_CONNECTION
