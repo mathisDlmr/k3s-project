@@ -4,4 +4,4 @@ metadata:
   name: skiut-backend-configmap
 data:
   OAUTH_REDIRECT_URI: https://skiut.mdlmr.fr/skiutc/auth/callback
-  OAUTH_BACKOFFICE_REDIRECT_URI: https://skiut.mdlmr.fr/skiutc/auth/shotgun-chambre/callback
+  OAUTH_BACKOFFICE_REDIRECT_URI: https://skiut.mdlmr.fr/skiutc/auth/back-office/callback
