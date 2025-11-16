@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: skiut-backend
-        image: ghcr.io/ski-utc/server-skiut-2026:d9e6eebc8999210bb19e053a9f7bac4e59a5022f
+        image: ghcr.io/ski-utc/server-skiut-2026:3292a9a204df54e537ea2573f8072c77bd0d437f
         ports:
         - containerPort: 80
         resources:
