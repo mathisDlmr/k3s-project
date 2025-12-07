@@ -1,0 +1,81 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: skiut-notification-cronjob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: scheduler
+              image: ghcr.io/ski-utc/server-skiut-2026:2be4477242e145babb6cff6409a848f824a54b05
+              command: ["php", "artisan", "schedule:run"]
+              volumeMounts:
+                - name: laravel-storage
+                  mountPath: /var/www/html/storage
+              env:
+                - name: LOG_CHANNEL
+                  value: stderr
+                - name: APP_ENV
+                  value: production
+                - name: APP_URL
+                  value: https://skiut.mdlmr.fr
+                - name: DB_CONNECTION
+                  value: mysql
+                - name: DB_HOST
+                  valueFrom:
+                    configMapKeyRef:
+                      name: skiut-database-configmap
+                      key: MYSQL_HOST
+                - name: DB_PORT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: skiut-database-configmap
+                      key: MYSQL_PORT
+                - name: DB_DATABASE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: skiut-database-configmap
+                      key: MYSQL_DB
+                - name: DB_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: skiut-database-secret
+                      key: MYSQL_USER
+                - name: DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: skiut-database-secret
+                      key: MYSQL_PASSWORD
+                - name: SIMDE_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: skiut-backend-secret
+                      key: SIMDE_KEY
+                - name: OAUTH_REDIRECT_URI
+                  valueFrom:
+                    configMapKeyRef:
+                      name: skiut-backend-configmap
+                      key: OAUTH_REDIRECT_URI
+                - name: OAUTH_BACKOFFICE_REDIRECT_URI
+                  valueFrom:
+                    configMapKeyRef:
+                      name: skiut-backend-configmap
+                      key: OAUTH_BACKOFFICE_REDIRECT_URI
+                - name: OAUTH_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: skiut-backend-secret
+                      key: OAUTH_CLIENT_ID
+                - name: OAUTH_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: skiut-backend-secret
+                      key: OAUTH_CLIENT_SECRET
+          restartPolicy: OnFailure
+          volumes:
+            - name: laravel-storage
+              persistentVolumeClaim:
+                claimName: skiut-backend-storage
