@@ -42,12 +42,7 @@ spec:
                 secretKeyRef:
                   name: skiut-database-secret
                   key: MYSQL_PASSWORD
-  volumeClaimTemplates:
-    - metadata:
-        name: mysql-data
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: local-path
-        resources:
-          requests:
-            storage: 10Gi
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: skiut-database-pvc
