@@ -14,28 +14,40 @@ spec:
         app: skiut-database
     spec:
       containers:
-      - name: skiut-database
-        image: mysql:8.0
-        ports:
-        - containerPort: 3306
-        env:
-        - name: MYSQL_DATABASE
-          valueFrom:
-            configMapKeyRef:
-              name: skiut-database-configmap
-              key: MYSQL_DB
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: skiut-database-secret
-              key: MYSQL_ROOT_PASSWORD
-        - name: MYSQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: skiut-database-secret
-              key: MYSQL_USER
-        - name: MYSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: skiut-database-secret
-              key: MYSQL_PASSWORD
+        - name: skiut-database
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: skiut-database-configmap
+                  key: MYSQL_DB
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: skiut-database-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: skiut-database-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: skiut-database-secret
+                  key: MYSQL_PASSWORD
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: local-path
+        resources:
+          requests:
+            storage: 10Gi
