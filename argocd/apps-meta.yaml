@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: meta-argocd
+  name: meta
   namespace: argocd
   labels:
     app.kubernetes.io/part-of: k3s-project
