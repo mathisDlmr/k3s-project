@@ -1,47 +1,138 @@
-# Setup du projet
+# Présentation
 
-## Website 
-- [ ] Ajuster le shadow violet sur les techno
-- [ ] Ajouter un filtre sur les projets
-- [ ] Mettre à jour les liens, descriptions, langages... dans les projects
-- [ ] Proposer plusieurs screens/pdf de chaque projet
+## Techno :
 
-## Projets
-* Skiut
-* Uptime Kuma
-* Monitoring Prom Grafana / Loki
-* Hosting étu
-* Registry Harbor
-* Gitea
+- k3s
+- ArgoCD
+- SealedSecrets
+- Cert-manager
+- Cloudflare Tunnel
+- Traefik
+- Prometheus
+- Grafana
+- Alertmanager
+- Déploiement complet d'une stack pour Ski'UT
 
-## TODO
-* setup kubectl et ssh avec une ouverture de port
-* setup SFTP
-* créer des ressources kind Namespace au cas où
-* kind Kustomization
-* Actuellement le certificat de sécurité récupéré n'est pas vraiment utilisé car validé pour le domaine, mais pas pour l'IP 192...... En effet, comme Let's Encrypt n'arrive pas à tester l'IP privée, ça fail. Il faudra réessayer avec les ports ouverts et en ajoutant l'ip dans les hosts tls de cluster-ingress
+## ArgoCD
 
-## Tuto
+ArgoCD est notre outil de GitOps. Concrètement, il lit notre repository Git contenant toutes nos configurations Kubernetes (manifests, Helm charts, Kustomize) et synchronise automatiquement le cluster avec ce qui est défini dans Git.
+On a défini une application meta qui déploie toutes les autres applications du cluster, ce qui permet de centraliser le contrôle et d’avoir une chaîne de déploiement automatisée et versionnée.
 
-### 1. Installer une OS Server (e.g. Ubuntu Server) sur un Rasp, N150, ...
+Grâce à ArgoCD, on peut :
 
-### 2. Installer et configurer la connexion SSH (généralement possible à l'installation)
+- Déployer des applications dans n’importe quel namespace.
+- Suivre l’état exact des ressources dans le cluster.
+- Automatiser le self-healing et le prune pour supprimer les ressources obsolètes.
+- Centraliser la gestion de secrets avec SealedSecrets et cert-manager.
 
-### 3. Configurer le wifi
+## SealedSecrets
+
+SealedSecrets permet de chiffrer nos secrets Kubernetes afin de pouvoir les stocker dans Git en toute sécurité. Chaque secret est chiffré avec la clé publique du contrôleur SealedSecrets dans le cluster et déchiffré automatiquement lorsqu’il est appliqué dans le cluster.
+
+Avantages :
+
+- Pas besoin de stocker les secrets en clair dans Git.
+- Les secrets restent portables entre clusters : chaque cluster a sa propre clé privée pour déchiffrer les secrets.
+- Compatible avec ArgoCD et GitOps, donc les secrets sont appliqués automatiquement au déploiement des applications.
+
+## Cert-manager
+
+Pour permettre une connexion HTTPS sans avoir à renouveler les certificats TLS à la main, le plus simple est d’installer cert-manager.
+Cert-manager s’occupe tout seul de communiquer avec Let’s Encrypt et de résoudre les challenges DNS/HTTP pour récupérer un certificat.
+
+- Les certificats sont ensuite stockés dans des Secrets Kubernetes, prêts à être utilisés par les Ingress.
+- La ressource ClusterIssuer permet de définir le CA et la méthode de validation (HTTP-01 ou DNS-01).
+- Dans notre setup, on utilise souvent DNS-01 via Cloudflare pour que le challenge fonctionne même derrière un tunnel.
+
+## Cloudflare Tunnel
+
+Afin de pouvoir installer le serveur sur n’importe quel réseau sans ouvrir de port, un tunnel Cloudflare est utilisé.
+Concrètement, un DaemonSet `cloudflared` maintient une connexion sortante persistante vers l’infrastructure Cloudflare. Tout le trafic HTTP(S) est ensuite routé vers les services du cluster via Traefik.
 
 ```bash
-sudo nano /etc/netplan/01-wifi.yaml
+[ Navigateur ] ⇄ HTTPS ⇄ [ Cloudflare Edge ]
+                              ⇅
+                              ⇅ (Tunnel sortant maintenu)
+                              ⇅
+                       [ cloudflared Daemon ] → [ Ingress Controller Traefik ] → [ Services ]
+```
+
+Avantages :
+
+- Pas besoin d’ouvrir les ports sur ta box.
+- Tout est routé de manière sécurisée via Cloudflare.
+- Permet d’utiliser des certificats TLS publics avec cert-manager.
+
+## Traefik
+
+Traefik est notre Ingress Controller.
+Il écoute sur les ports 80 et 443 et route les requêtes HTTP(S) vers les services correspondants en fonction des Ingress définis.
+
+- Supporte nativement TLS avec cert-manager, Let’s Encrypt et ACME.
+- Peut être exposé en NodePort, LoadBalancer, ou derrière Cloudflare Tunnel.
+- Gère le routage vers plusieurs services comme registry.mdlmr.fr, skiut.mdlmr.fr, hosting.mdlmr.fr ou argocd.mdlmr.fr.
+- Permet d’ajouter du middleware (auth, redirections, headers) très facilement.
+
+## Prometheus
+
+Prometheus est le système de monitoring et de collecte de métriques.
+Il récupère automatiquement les métriques exposées par les services et pods Kubernetes via des endpoints /metrics.
+
+- Très utile pour suivre l’état du cluster, des nodes et des applications.
+- Compatible avec Grafana pour visualiser les données via des dashboards.
+- Permet de créer des alertes basées sur les métriques observées.
+
+## Grafana
+
+Grafana est l’outil de visualisation des métriques.
+
+- Permet de créer des dashboards dynamiques pour voir la charge CPU, la mémoire, l’usage réseau, etc.
+- Peut se connecter à Prometheus et d’autres bases de données de métriques.
+- Permet également de visualiser les traces envoyées par Grafana Tempo si on active l’OpenTelemetry dans nos services backend.
+
+## Alertmanager
+
+Alertmanager est le composant de gestion des alertes pour Prometheus.
+
+- Reçoit les alertes générées par Prometheus.
+- Permet de regrouper, dédoublonner, inhiber ou envoyer les alertes vers différents canaux (email, Slack, webhook…).
+- Permet de ne pas être spammé par des alertes répétitives et d’avoir un suivi centralisé des incidents.
+
+## Ski'UT
+
+Déploiement complet d’une stack pour Ski’UT, l’association UTCéenne qui organise chaque année un voyage au ski et propose une application mobile pour animer le voyage.
+
+La stack déployée comprend :
+
+- Backend Laravel
+  - Deployment, Service, Ingress, ConfigMap et SealedSecret.
+  - HPA et PDB pour garantir un fonctionnement stable.
+  - CronJob pour envoyer automatiquement des notifications.
+  - PVC pour stocker les données persistantes et les partager entre les différentes instances backend.
+- MySQL StatefulSet
+  - Service, ConfigMap et SealedSecret.
+- ProxySQL
+  - Deployment, Service et ConfigMap pour gérer les pools de connexions à la DB.
+- PhpMyAdmin
+  - Deployment, Service et Ingress pour visualiser la base de données.
+
+# Setup
+
+## 1. Installer une OS Server (e.g. Ubuntu Server) sur un Rasp, Nuc, ...
+
+## 2. Configurer le wifi
+
+```bash
+sudo nano /etc/netplan/00-config.yaml
 ```
 
 ```yaml
 network:
   version: 2
-  renderer: networkd      
-
+  renderer: networkd
   ethernets:
     enp3s0:
       dhcp4: true
-
   wifis:
     wlp1s0:
       dhcp4: true
@@ -56,47 +147,117 @@ sudo netplan apply
 ip a
 ```
 
-### 4. Tester la connexion SSH
-
-Récupérer l'IP du réseau
-```bash
-ip a
-```
-
-Scanner le réseau
-```bash
-nmap -sn <reseau>/<mask>
-```
-
-Trouver l'ip du serveur et se ssh dessus
-```bash
-ssh <login>@<ip>
-```
-
-### 5. Optionnel mais pratique : configurer le DHCP de sa box pour donner une ip fixe au serveur
-
-### 6. Installer k3s
+## 3. Configurer ssh
 
 ```bash
-curl -sfL https://get.k3s.io | sh -
+sudo apt install openssh-server
+sudo systemctl enable ssh
+sudo systemctl start ssh
 ```
 
-### 7. Config son kubectl
+## 4. Activer le firewall
 
 ```bash
-scp <login>@<ip>:/etc/rancher/k3s/k3s.yaml ./k3s.yaml
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow ssh
+sudo ufw allow 6443/tcp
+sudo ufw enable
 ```
 
-Modifier le fichier pour pointer vers le serveur
+## 5. Installer tailscale
+
+```bash
+sudo apt update
+sudo apt install -y tailscale
+sudo systemctl enable --now tailscaled
+sudo tailscale up --ssh
+tailscale status
+sudo ufw allow in on tailscale0
+```
+
+## 6. Installer k3s sur le control-plane
+
+```bash
+curl -sfL https://get.k3s.io | sh -s - server \
+  --node-name <CP_NODE_NAME> \
+  --tls-san 127.0.0.1 \
+  --tls-san localhost \
+  --tls-san <IP_LAN> \
+  --tls-san <IP_TAILSCALE> \
+  --disable traefik
+```
+
+## 7. (Optionnel) Ajouter un node worker
+
+### 7.1. Configurer le worker
+
+Refaire les étapes 1 à 5 sur le worker
+
+### 7.2. Récupérer le token du control-plane
+
+Sur le noeud master :
+
+```bash
+sudo cat /var/lib/rancher/k3s/server/token
+```
+
+### 7.3. Ajouter le worker au cluster
+
+Sur le noeud worker :
+
+```bash
+curl -sfL https://get.k3s.io | sh -s - agent \
+  --server https://<CP_TAILSCALE_IP>:6443 \
+  --token <TOKEN> \
+  --node-name <WORKER_NODE_NAME>
+```
+
+### 7.4. Définir les labels des nodes (exemple)
+
+Exemple avec
+
+- Un control-plane
+  - stable
+  - puissant
+- Un worker
+  - instable
+  - faible
+
+```bash
+kubectl label node <CP_NODE_NAME> \
+  node-role=stable \
+  node-power=high
+
+kubectl label node <WORKER_NODE_NAME> \
+  node-role=unstable \
+  node-power=low
+
+kubectl taint node <CP_NODE_NAME> \
+  instability=true:NoSchedule
+```
+
+### 7.5. Vérifier le cluster
+
+```bash
+kubectl get nodes
+```
+
+## 8. Donner accès au cluster à son pc
+
+```bash
+scp <login>@<CP_IP>:/etc/rancher/k3s/k3s.yaml ./k3s.yaml
+```
+
+Modifier le fichier pour pointer vers le control-plane
+
 ```bash
 mkdir -p ~/.kube
-sed -i 's/127.0.0.1/<ip>/' ~/.kube/config
+sed -i 's/127.0.0.1/<CP_TAILSCALE_IP>/' ~/.kube/config
 k get pods -A
 ```
 
--> Normalement on y retrouve les services de k3s par défaut (coredns, traefik, ...)
-
-### 8. Déployer argoCD
+## 9. Installer argocd
 
 ```bash
 k create namespace argocd
@@ -108,143 +269,62 @@ k port-forward svc/argocd-server -n argocd 8081:443
 
 -> L'UI est maintenant accessible sur `http://localhost:8081`. Le login est `admin` est le mdp a été révélé par le secret ci-dessus
 
-### 9. Déployer cert-manager
-
-Pour permettre une connexion HTTPS sans avoir à renouveler les certificats TLS à la main, le plus simple est d'installer cert-manager.
-Cert-manager s'occupe tout seul de communiquer avec Lets-Encrypt et résoudre les challenges DNS/HTTP pour récupérer un certificat.
-Une fois le certificat délivré, il le stocke dans un secret qui peut être ensuite utilisé par l'Ingress.
-La ressource cluster-issuer permet simplement de configurer le CA qu'on utilise.
+## 10. Donner les accès du repo à ArgoCD
 
 ```bash
-k create namespace cert-manager
-k apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
-k get pods -n cert-manager
+ssh-keygen -t ed25519 -C "mon.email@domain.com"
 ```
 
-### 12. Cloudflare Tunnel
+Ensuite, ajouter la clé publique dans le repo : Settings > Deploy keys
+Puis ajouter la clé privée dans ArgoCD : Settings > Repository
 
-Afin de permettre l'installation du serveur sur n'importe quel réseau sans ouvrir de port, un tunnel cloudflare a été défini.
-Concrètement, un Daemonset `cloudflared` agit pour maintenir une connexion persistante vers CloudFlare qui sert de tunnel :
-```
-[ Navigateur ] ⇄ HTTPS ⇄ [ Cloudflare Edge ]
-                              ⇅
-                              ⇅ (Tunnel sortant maintenu)
-                              ⇅
-                       [ cloudflared Daemon ] → [ Ingress Controller Traefik ] → [ Services ]
-```
+## 11. Créer l'app meta qui va tout déployer
 
-Pour ça, créer le namespace infra et ajouter en secret le token de cloudflare
-```bash
-kubectl create namespace infra
-kubectl create secret generic cloudflared-token --from-literal=token='<token>' -n infra
-```
-Ensuite, il faut configurer le DNS du tunel cloudflare pour chaque sous-domaine DNS souhaité en lui donnant une target dans le cluster. Cela se fait depuis Zero Trust -> Networks -> Tunnels -> Public hostname.
-On fait ensuite pointer tous nos subdomains names sur notre l'IP de notre Ingress d'entrée (pour l'instant port 80)
-
-### 13. Challenge DNS
-
-Pour permettre à Let's Encrypt de faire ses challenges, il faut soit 
-* Configurer les CNAME pour permettre les challenges HTTP sur chaque CNAME
-* Créer un token API avec droits d'édition sur les zones DNS pour faire des challenges DNS
-La deuxième solution étant plus simple, c'est celle qu'on implémente ici.
-Pour ça il faut aller sur cloudfare pour créer le token api et lui donner des droits d'édition sur la zone DNS mdlmr
-```bash
-kubectl create secret generic cloudflare-api-token-secret --from-literal=api-token='<token>' -n infra
-```
-
-On peut vérifier après avec 
-```bash
-k describe certificate mdlmr-fr-tls -n infra
-```
-
-En cas d'erreur, vérifier les challenges : 
-```bash
-k describe certificate mdlmr-fr-tls -n infra
-k describe certificaterequest mdlmr-fr-tls -n infra
-k get challenges -A
-k describe challenge mdlmr-fr-tls-<id_de_challenge> -n infra
-```
-
-### 14. Rendre ArgoCD accessible
-
-Pour rendre argoCD accessible, il suffit de désactiver la sécurité comme notre https se fait maintenant au niveau de l'ingress, et que l'ingress sert ensuite vert notre service.
-On ajoute donc à argocd-cmd-params-cm :
-
-```yaml
-data:
-  server.insecure: "true"
-```
-
-Puis on redémarre argocd : 
-```bash
-k rollout restart deployment argocd-server -n argocd
-```
-
-### 15. Monitoring
-
-```bash
-curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo add grafana https://grafana.github.io/helm-charts
-helm repo update
-helm upgrade --install kube-state-metrics prometheus-community/kube-state-metrics --namespace monitoring --create-namespace
-helm upgrade --install prometheus prometheus-community/prometheus --namespace monitoring
-helm upgrade --install grafana grafana/grafana --namespace monitoring
-kubectl get secret grafana -n monitoring -o jsonpath="{.data.admin-password}" | base64 --decode
-kubectl port-forward svc/grafana -n monitoring 3000:80
-```
-
-### 16. Déployer méta
-
-On peut maintenant déployer méta et voir la magie se faire. Pour apprécier le déploiement, mieux vaut d'abord déployer l'ingress d'argocd pour pouvoir regarder l'ui pendant le déploiement 
-```bash
-k apply -f argocd/argocd-ingress.yaml
-```
 ```bash
 k apply -f argocd/apps-meta.yaml
 ```
 
-### 17. SealedSecrets
+## 12. Installer kubeseal pour chiffrer nos secrets
 
-Pour permettre de garder une approche GitOps sans pour autant exposer ses secrets, on a 2 solutions : 
-* Faire des SealedSecrets qui ne seront déchiffrables que par un controller de notre cluster
-* Un ESO (type Vault) mais c'est un peu overkill ici
-
-On installe donc le controller pour les sealed secret (celui qui aura la clé privée)
 ```bash
-k apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.27.0/controller.yaml
+KUBESEAL_VERSION='0.34.0'
+wget "https://github.com/bitnami-labs/sealed-secrets/releases/download/v${KUBESEAL_VERSION:?}/kubeseal-${KUBESEAL_VERSION:?}-linux-amd64.tar.gz"
+tar -xvzf kubeseal-${KUBESEAL_VERSION:?}-linux-amd64.tar.gz kubeseal
+sudo install -m 755 kubeseal /usr/local/bin/kubeseal
+rm kubeseal-${KUBESEAL_VERSION:?}-linux-amd64.tar.gz kubeseal
 ```
 
-On installe kubeseal pour chiffrer en local (avec la clé publique)
+### 12.1. Chiffrer les secrets
+
+Qui dit nouveau cluster, dit nouvelle clé privée pour sealed-secrets, et donc nouveaux secrets chiffrés.
+
 ```bash
-wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.18.0/kubeseal-0.18.0-linux-amd64.tar.gz
-tar -xzf kubeseal-0.18.0-linux-amd64.tar.gz && sudo install -m 755 kubeseal /usr/local/bin/kubeseal && rm kubeseal kubeseal-0.18.0-linux-amd64.tar.gz
+cat <secret.yaml> | kubeseal --controller-namespace infra --controller-name sealed-secrets --format yaml > <sealed-secret.yaml>
 ```
 
-Maintenant on peut créer des secrets en local, les transformer en SealedSecret et push le sealed-secret dans le repo
-```bash
-kubectl create -f secret.yaml --dry-run=client -o json | kubeseal --format yaml > sealed-secret.yaml
-```
-Le secret sera automatiquement déchiffré par le controller et créé lors du Sync
+Les secrets à recréer à partir de clés définies sont :
 
-_En cas d'erreur de certificat_
-```bash
-kubeseal --format yaml --cert <(kubeseal --fetch-cert --controller-name=sealed-secrets-controller --controller-namespace=kube-system)
-```
+- cloudflare-api-token-secret.yaml
+- cloudflare-tunnel-token-secret.yaml
 
-<!-- ### 14. SSH à travers le tunnel
+Les autres peuvent être définis manuellement.
 
-Il est possible d'activer la connexion SSH depuis l'UI de CloudFlare.
-Pour ça il faut ajouter un public hostname avec le protocole SSH qui target le port `http://localhost:22`.
-Ensuite, côté dev, il faut ajouter 
-```bash
-echo '
+# TODO
 
-Host ssh.mdlmr.fr
-  ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
-  User user' >> ~/.ssh/config
-```
+## TODO
 
-Le serveur est maintenant accessible depuis `ssh login@ssh.mdlm.fr`
+- [ ] Loki
+- [ ] Tempo
+- [ ] Kargo
+- [ ] External DNS
+- [ ] Uptime Kuma
+- [ ] Registry Harbor
+- [ ] Gitea
+- [ ] Hosting
 
-### 15. Kubectl à travers le tunnel -->
+## TODO - Website
+
+- [ ] Ajuster le shadow violet sur les techno
+- [ ] Ajouter un filtre sur les projets
+- [ ] Mettre à jour les liens, descriptions, langages... dans les projects
+- [ ] Proposer plusieurs screens/pdf de chaque projet
