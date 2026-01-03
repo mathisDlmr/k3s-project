@@ -1,2 +1,2 @@
-!gitignore
-website/
+#!gitignore
+.website/
