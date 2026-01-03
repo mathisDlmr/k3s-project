@@ -11,6 +11,7 @@ resources:
   - ingress/website-ingress.yaml
   - website/website-deployment.yaml
   - website/website-service.yaml
+  - sealed-secrets/apps-sealed-secrets.yaml
 
 labels:
   - pairs:
