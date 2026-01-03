@@ -74,6 +74,7 @@ spec:
                     secretKeyRef:
                       name: skiut-backend-secret
                       key: OAUTH_CLIENT_SECRET
+          restartPolicy: Never
           volumes:
             - name: laravel-storage
               persistentVolumeClaim:
