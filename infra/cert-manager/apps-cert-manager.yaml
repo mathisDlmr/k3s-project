@@ -3,19 +3,17 @@ kind: Application
 metadata:
   name: cert-manager
   namespace: argocd
-  labels:
-    app.kubernetes.io/part-of: infra
 spec:
   project: default
   source:
-    repoURL: "https://charts.jetstack.io"
+    repoURL: https://charts.jetstack.io
     chart: cert-manager
-    targetRevision: "1.19.2"
+    targetRevision: 1.19.2
     helm:
       values: |
         installCRDs: true
   destination:
-    server: "https://kubernetes.default.svc"
+    server: https://kubernetes.default.svc
     namespace: infra
   syncPolicy:
     automated:

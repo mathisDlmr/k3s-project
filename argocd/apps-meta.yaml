@@ -3,17 +3,13 @@ kind: Application
 metadata:
   name: meta
   namespace: argocd
-  labels:
-    app.kubernetes.io/part-of: k3s-project
-  annotations:
-    description: "Application meta à la racine du projet - Elle déploie toutes les applications hebergées sur le cluster"
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
   source:
-    repoURL: "https://github.com/mathisDlmr/k3s-project.git"
+    repoURL: https://github.com/mathisDlmr/k3s-project.git
     targetRevision: main
     path: meta/
   syncPolicy:

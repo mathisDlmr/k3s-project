@@ -321,8 +321,9 @@ Les autres peuvent être définis manuellement.
   - Et voir si il n'y a pas d'autres serviceMonitor sympa à deploy
 - Mieux gérer les certificats de sécruité et DNS
 - Pourquoi l'arborescende sur l'ui de argoCD n'est pas bonne ?
+- ArgoCD projects ?
 
-- [ ] Loki
+- [ ] Loki (Promtail + logcli ?)
 - [ ] Tempo
 - [ ] External DNS
 - [ ] Kargo

@@ -1,8 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: monitoring
-
 resources:
   - k3s-servicemonitor.yaml
   - k3s-kube-proxy-servicemonitor.yaml
@@ -10,7 +8,3 @@ resources:
   - node-exporter-servicemonitor.yaml
   - skiut-backend-servicemonitor.yaml
   - skiut-mysql-servicemonitor.yaml
-
-labels:
-  - pairs:
-      app.kubernetes.io/part-of: monitoring

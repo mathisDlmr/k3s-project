@@ -3,24 +3,18 @@ kind: ServiceMonitor
 metadata:
   name: node-exporter-monitor
   namespace: monitoring
-  labels:
-    app.kubernetes.io/part-of: monitoring
-    app.kubernetes.io/name: node-exporter-monitor
-    app.kubernetes.io/component: servicemonitor
-  annotations:
-    description: "ServiceMonitor pour surveiller les métriques des nœuds du cluster"
 spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: node-exporter
   endpoints:
-  - port: https
-    scheme: https
-    tlsConfig:
-      insecureSkipVerify: true
-    interval: 30s
-    path: /metrics
+    - port: https
+      scheme: https
+      tlsConfig:
+        insecureSkipVerify: true
+      interval: 30s
+      path: /metrics
   namespaceSelector:
     matchNames:
-    - monitoring
+      - monitoring
   jobLabel: app.kubernetes.io/name

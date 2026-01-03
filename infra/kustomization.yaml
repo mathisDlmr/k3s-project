@@ -9,8 +9,3 @@ resources:
   - cloudflared/cloudflared-tunnel.yaml
   - sealed-secrets/apps-sealed-secrets.yaml
   - traefik/apps-traefik.yaml
-
-labels:
-  - pairs:
-      app.kubernetes.io/part-of: k3s-project
-      app.kubernetes.io/managed-by: argocd

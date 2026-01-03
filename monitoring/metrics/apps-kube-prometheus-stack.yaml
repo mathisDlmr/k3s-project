@@ -3,65 +3,20 @@ kind: Application
 metadata:
   name: monitoring-stack
   namespace: argocd
-  labels:
-    app.kubernetes.io/part-of: monitoring
 spec:
   project: default
   sources:
-    - repoURL: "https://github.com/mathisDlmr/k3s-project.git"
+    - repoURL: https://github.com/mathisDlmr/k3s-project.git
       targetRevision: main
       path: monitoring/metrics/overload-config/
-    - repoURL: "https://prometheus-community.github.io/helm-charts"
+    - repoURL: https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack
-      targetRevision: "77.11.1"
+      targetRevision: 77.11.1
       helm:
-        values: |
-          defaultRules:
-            create: true
-            rules:
-              kubeControllerManager: false   # Règles problématiques pour k3s
-              kubeProxy: false
-              kubeSchedulerAlerting: false
-              alertmanager: false
-            disabled:
-              KubeControllerManagerDown: true
-              KubeProxyDown: true
-              KubeSchedulerDown: true       # Jusqu'à ici toutes les règles sont problm avec k3s
-              CPUThrottlingHigh: true
-              AlertmanagerDown: true
-              AlertmanagerClusterDown: true
-          prometheus:
-            prometheusSpec:
-              replicas: 1
-              scrapeInterval: 15s
-              evaluationInterval: 15s
-              serviceMonitorSelector: {}
-              serviceMonitorNamespaceSelector: {}
-              serviceMonitorSelectorNilUsesHelmValues: false
-              ruleSelector: {}
-              ruleNamespaceSelector: {}
-              ruleSelectorNilUsesHelmValues: false
-              storageSpec:
-                volumeClaimTemplate:
-                  spec:
-                    storageClassName: local-path
-                    resources:
-                      requests:
-                        storage: 20Gi
-          alertmanager:
-            enabled: false
-          grafana:
-            defaultDashboardsTimezone: "Europe/Paris"
-            admin:
-              existingSecret: grafana-admin-secret
-              existingSecretUserKey: admin-user
-              existingSecretPasswordKey: admin-password
-            grafana.ini:
-              server:
-                root_url: "%(protocol)s://%(domain)s/"
+        valuesFile: kube-prometheus-stack.yaml
 
   destination:
-    server: "https://kubernetes.default.svc"
+    server: https://kubernetes.default.svc
     namespace: monitoring
   syncPolicy:
     automated:

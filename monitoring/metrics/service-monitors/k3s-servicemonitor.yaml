@@ -3,29 +3,23 @@ kind: ServiceMonitor
 metadata:
   name: k3s-cluster-monitor
   namespace: monitoring
-  labels:
-    app.kubernetes.io/part-of: monitoring
-    app.kubernetes.io/name: k3s-monitor
-    app.kubernetes.io/component: servicemonitor
-  annotations:
-    description: "ServiceMonitor pour surveiller le cluster k3s (kubelet, kube-proxy, etc.)"
 spec:
   selector:
     matchLabels:
       k8s-app: kubelet
   endpoints:
-  - port: https-metrics
-    scheme: https
-    tlsConfig:
-      insecureSkipVerify: true
-    bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-    interval: 30s
-    path: /metrics
-    honorLabels: true
-    relabelings:
-    - sourceLabels: [__metrics_path__]
-      targetLabel: metrics_path
+    - port: https-metrics
+      scheme: https
+      tlsConfig:
+        insecureSkipVerify: true
+      bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+      interval: 30s
+      path: /metrics
+      honorLabels: true
+      relabelings:
+        - sourceLabels: [__metrics_path__]
+          targetLabel: metrics_path
   namespaceSelector:
     matchNames:
-    - kube-system
+      - kube-system
   jobLabel: k8s-app
