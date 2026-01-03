@@ -5,20 +5,21 @@ metadata:
   namespace: skiut
   annotations:
     kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: cluster-issuer
     traefik.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: skiut.mdlmr.fr
-    http:
-      paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: skiut-backend
-              port:
-                number: 80
+    - host: skiut.mdlmr.fr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: skiut-backend
+                port:
+                  number: 80
   tls:
-  - hosts:
-    - skiut.mdlmr.fr
-    secretName: skiut-ingress-tls
+    - hosts:
+        - skiut.mdlmr.fr
+      secretName: skiut-ingress-tls
