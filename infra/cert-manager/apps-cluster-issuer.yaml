@@ -1,19 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: cluster-issuer
   namespace: argocd
   labels:
     app.kubernetes.io/part-of: infra
 spec:
   project: default
   source:
-    repoURL: "https://charts.jetstack.io"
-    chart: cert-manager
-    targetRevision: "1.19.2"
-    helm:
-      values: |
-        installCRDs: true
+    repoURL: "https://github.com/mathisDlmr/k3s-project.git"
+    targetRevision: main
+    path: infra/cert-manager/cluster-issuer/
   destination:
     server: "https://kubernetes.default.svc"
     namespace: infra
