@@ -8,6 +8,7 @@ resources:
   - cloudflared/cloudflare-tunnel-token-sealed-secret.yaml
   - cloudflared/cloudflared-tunnel.yaml
   - sealed-secrets/apps-sealed-secrets.yaml
+  - traefik/apps-traefik.yaml
 
 labels:
   - pairs:
