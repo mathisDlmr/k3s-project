@@ -313,10 +313,19 @@ Les autres peuvent être définis manuellement.
 
 ## TODO
 
+- Définir taint et tolérations :
+  - Prom, Grafana, AlertManager, CronJobs Skiut c'est sur le worker
+- Mieux ranger les serviceMonitor :
+  - Sois les supprimer
+  - Sois les deployer dans leur namespace concerné
+  - Et voir si il n'y a pas d'autres serviceMonitor sympa à deploy
+- Mieux gérer les certificats de sécruité et DNS
+- Pourquoi l'arborescende sur l'ui de argoCD n'est pas bonne ?
+
 - [ ] Loki
 - [ ] Tempo
-- [ ] Kargo
 - [ ] External DNS
+- [ ] Kargo
 - [ ] Uptime Kuma
 - [ ] Registry Harbor
 - [ ] Gitea
