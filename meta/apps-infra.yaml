@@ -21,12 +21,11 @@ spec:
       submoduleEnabled: true
   syncPolicy:
     automated:
-      prune: true
       selfHeal: true
+      prune: true
     syncOptions:
       - CreateNamespace=true
-      - ApplyOutOfSyncOnly=true
-      - Validate=false
+      - ServerSideApply=true
     retry:
       limit: 5
       backoff:
