@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: infra
 
 resources:
-  - cert-manager/cluster-issuer.yaml
+  - cert-manager/apps-cert-manager.yaml
   - cloudflared/cloudflare-api-token-sealed-secret.yaml
   - cloudflared/cloudflare-tunnel-token-sealed-secret.yaml
   - cloudflared/cloudflared-tunnel.yaml

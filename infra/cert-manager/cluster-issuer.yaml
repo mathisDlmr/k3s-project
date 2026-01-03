@@ -4,14 +4,12 @@ metadata:
   name: cluster-issuer
 spec:
   acme:
-    email: mathis.dlmr@gmail.com
-    server: https://acme-v02.api.letsencrypt.org/directory   # Staging : https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory # Staging : https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: acme-key
     solvers:
-    - dns01:
-        cloudflare:
-          email: mathis.dlmr@gmail.com
-          apiTokenSecretRef:
-            name: cloudflare-api-token-secret
-            key: api-token
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token-secret
+              key: api-token
