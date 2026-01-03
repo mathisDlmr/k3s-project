@@ -15,7 +15,7 @@ spec:
       targetRevision: 77.11.1
       helm:
         valueFiles:
-          - $values/kube-prometheus-stack-values.yaml
+          - $values/monitoring/metrics/overload-config/kube-prometheus-stack-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
