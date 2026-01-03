@@ -1,0 +1,3 @@
+#!gitignore
+cloudflare-api-token-secret.yaml
+cloudflare-tunnel-token-secret.yaml
