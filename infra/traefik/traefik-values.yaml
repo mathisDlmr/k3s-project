@@ -6,3 +6,8 @@ tlsStore:
 logs:
   access:
     enabled: true
+
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "50m"

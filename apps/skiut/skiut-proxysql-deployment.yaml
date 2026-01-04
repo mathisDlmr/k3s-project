@@ -14,24 +14,28 @@ spec:
         app: skiut-proxysql
     spec:
       containers:
-      - name: skiut-proxysql
-        image: proxysql/proxysql:3.0.2
-        ports:
-        - containerPort: 6033
-        - containerPort: 6032
-        envFrom:
-        - configMapRef:
-            name: skiut-database-configmap
-        - secretRef:
-            name: skiut-database-secret
-        volumeMounts:
-        - name: proxysql-config
-          mountPath: /entrypoint.sh
-          subPath: entrypoint.sh
-        command: ["/bin/sh", "-c"]
-        args: ["/entrypoint.sh"]
+        - name: skiut-proxysql
+          image: proxysql/proxysql:3.0.2
+          ports:
+            - containerPort: 6033
+            - containerPort: 6032
+          envFrom:
+            - configMapRef:
+                name: skiut-database-configmap
+            - secretRef:
+                name: skiut-database-secret
+          volumeMounts:
+            - name: proxysql-config
+              mountPath: /entrypoint.sh
+              subPath: entrypoint.sh
+          command: ["/bin/sh", "-c"]
+          args: ["/entrypoint.sh"]
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
       volumes:
-      - name: proxysql-config
-        configMap:
-          name: skiut-proxysql-config
-          defaultMode: 0755
+        - name: proxysql-config
+          configMap:
+            name: skiut-proxysql-config
+            defaultMode: 0755

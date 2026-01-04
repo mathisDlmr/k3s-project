@@ -31,6 +31,10 @@ prometheus:
           resources:
             requests:
               storage: 20Gi
+    resources:
+      requests:
+        memory: "768Mi"
+        cpu: "100m"
 
 alertmanager:
   enabled: false

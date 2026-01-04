@@ -29,3 +29,7 @@ spec:
                 configMapKeyRef:
                   name: skiut-database-configmap
                   key: MYSQL_PORT
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"

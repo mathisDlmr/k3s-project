@@ -20,11 +20,8 @@ spec:
             - containerPort: 80
           resources:
             requests:
-              cpu: 200m
-              memory: 1Gi
-            limits:
-              cpu: 500m
-              memory: 2Gi
+              cpu: 100m
+              memory: 256Mi
           volumeMounts:
             - name: laravel-storage
               mountPath: /var/www/html/storage

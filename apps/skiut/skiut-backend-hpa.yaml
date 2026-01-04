@@ -25,14 +25,14 @@ spec:
           averageUtilization: 80
   behavior:
     scaleUp:
-      stabilizationWindowSeconds: 0   # pas de délai avant montée
+      stabilizationWindowSeconds: 0 # pas de délai avant montée
       policies:
-      - type: Percent
-        value: 100                    # max doublement par minute
-        periodSeconds: 60
+        - type: Percent
+          value: 100 # max doublement par minute
+          periodSeconds: 60
     scaleDown:
       stabilizationWindowSeconds: 300 # attend 5 min avant de réduire
       policies:
-      - type: Percent
-        value: 50                     # réduit de moitié max par minute
-        periodSeconds: 60
+        - type: Percent
+          value: 50 # réduit de moitié max par minute
+          periodSeconds: 60

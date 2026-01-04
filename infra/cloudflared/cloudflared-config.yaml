@@ -7,9 +7,8 @@ data:
   config.yaml: |
     tunnel: mdlmr-tunnel
     credentials-file: /etc/cloudflared/creds/credentials.json
-
     ingress:
-      - hostname: *.mdlmr.fr
+      - hostname: "*.mdlmr.fr"
         service: https://traefik.traefik.svc.cluster.local      
         originRequest:
           originServerName: mdlmr.fr

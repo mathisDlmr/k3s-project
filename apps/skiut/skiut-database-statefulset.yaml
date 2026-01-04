@@ -42,6 +42,10 @@ spec:
                 secretKeyRef:
                   name: skiut-database-secret
                   key: MYSQL_PASSWORD
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "50m"
       volumes:
         - name: mysql-data
           persistentVolumeClaim:
