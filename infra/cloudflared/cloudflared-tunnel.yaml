@@ -21,9 +21,9 @@ spec:
             - cloudflared
             - tunnel
             - --no-autoupdate
-            - run
             - --config
             - /etc/cloudflared/config/config.yaml
+            - run
           env:
             - name: TUNNEL_TOKEN
               valueFrom:
