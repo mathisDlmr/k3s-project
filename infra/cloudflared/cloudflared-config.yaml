@@ -10,23 +10,13 @@ data:
 
     ingress:
       - hostname: mdlmr.fr
-        service: https://traefik.traefik.svc.cluster.local
-        originRequest:
-          noTLSVerify: false
+        service: http://traefik.traefik.svc.cluster.local
       - hostname: skiut.mdlmr.fr
-        service: https://traefik.traefik.svc.cluster.local
-        originRequest:
-          noTLSVerify: false
+        service: http://traefik.traefik.svc.cluster.local
       - hostname: skiutpma.mdlmr.fr
-        service: https://traefik.traefik.svc.cluster.local
-        originRequest:
-          noTLSVerify: false
+        service: http://traefik.traefik.svc.cluster.local
       - hostname: argocd.mdlmr.fr
-        service: https://traefik.traefik.svc.cluster.local
-        originRequest:
-          noTLSVerify: false
+        service: http://traefik.traefik.svc.cluster.local
       - hostname: grafana.mdlmr.fr
-        service: https://traefik.traefik.svc.cluster.local
-        originRequest:
-          noTLSVerify: false          
+        service: http://traefik.traefik.svc.cluster.local          
       - service: http_status:404
