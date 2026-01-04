@@ -5,8 +5,6 @@ loki:
     ring:
       kvstore:
         store: inmemory
-
-  # Setting up schemaConfig for better performance
   schemaConfig:
     configs:
       - from: "2023-01-01"
@@ -16,12 +14,8 @@ loki:
         index:
           prefix: loki_index_
           period: 24h
-
-  # Storage configuration
   storage:
     type: filesystem
-
-  # Enable resources limits and requests
   resources:
     requests:
       cpu: 100m
@@ -29,12 +23,6 @@ loki:
     limits:
       cpu: 1000m
       memory: 1Gi
-
-  # Pattern ingester for better performance
-  pattern_ingester:
-    enabled: true
-
-  # Configure limits for stability
   limits_config:
     ingestion_rate_mb: 8
     ingestion_burst_size_mb: 16
@@ -44,14 +32,13 @@ loki:
     retention_period: 168h # 7 days retention
     allow_structured_metadata: true
     volume_enabled: true
-
-  # Persistence configuration
   persistence:
     enabled: true
     size: 10Gi
     storageClassName: hostpath
+  pattern_ingester:
+    enabled: true
 
-# Explicitly set the deployment mode
 deploymentMode: SingleBinary
 singleBinary:
   replicas: 1
@@ -61,41 +48,16 @@ read:
   replicas: 0
 write:
   replicas: 0
-service:
-  type: NodePort
-  port: 3100
-  nodePort: 31000
-nodeSelector:
-  node-role: worker
-promtail:
+
+test:
   enabled: false
-grafana:
-  enabled: false
-prometheus:
-  enabled: false
-readinessProbe:
-  httpGet:
-    path: /ready
-    port: http
-  initialDelaySeconds: 30
-  timeoutSeconds: 1
-livenessProbe:
-  httpGet:
-    path: /ready
-    port: http
-  initialDelaySeconds: 45
-  timeoutSeconds: 1
-securityContext:
-  fsGroup: 10001
-  runAsUser: 10001
-  runAsGroup: 10001
-canary:
+lokiCanary:
   enabled: false
 gateway:
   enabled: false
-results_cache:
+resultsCache:
   enabled: false
-chunks_cache:
+chunksCache:
   enabled: false
 memcached:
   enabled: false
