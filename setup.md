@@ -328,6 +328,7 @@ Les autres peuvent être définis manuellement.
 - [ ] Kubernetes dashboard
 - [ ] Tempo + Opentelemetry
 - [ ] Dashboards Grafana ArgoCD, Cloudflare, Traefik...
+- [ ] TFA avec Google (https://mattdyson.org/blog/2024/02/using-traefik-with-cloudflare-tunnels/) ou Keycloak
 - [ ] Serveur ski'ut en nodejs
 - [ ] Templatiser Ski'ut en Helm, surtout pour injecter les env
 - [ ] Kargo
