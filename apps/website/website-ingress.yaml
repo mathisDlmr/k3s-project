@@ -5,6 +5,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
     cert-manager.io/cluster-issuer: cluster-issuer
+    traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
     - host: mdlmr.fr
@@ -21,4 +22,3 @@ spec:
   tls:
     - hosts:
         - mdlmr.fr
-      secretName: mdlmr-fr-tls

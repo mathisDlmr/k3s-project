@@ -6,19 +6,19 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
     cert-manager.io/cluster-issuer: cluster-issuer
+    traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
-  - host: argocd.mdlmr.fr
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: argocd-server
-            port:
-              number: 80
+    - host: argocd.mdlmr.fr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
   tls:
-  - hosts:
-    - argocd.mdlmr.fr
-    secretName: mdlmr-fr-tls
+    - hosts:
+        - argocd.mdlmr.fr

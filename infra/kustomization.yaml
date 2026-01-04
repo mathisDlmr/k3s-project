@@ -4,8 +4,10 @@ kind: Kustomization
 resources:
   - cert-manager/apps-cert-manager.yaml
   - cert-manager/cluster-issuer.yaml
+  - cert-manager/wildcard-certificate.yaml
   - cloudflared/cloudflare-api-token-sealed-secret.yaml
   - cloudflared/cloudflare-tunnel-token-sealed-secret.yaml
+  - cloudflared/cloudflared-config.yaml
   - cloudflared/cloudflared-tunnel.yaml
   - sealed-secrets/apps-sealed-secrets.yaml
   - traefik/apps-traefik.yaml

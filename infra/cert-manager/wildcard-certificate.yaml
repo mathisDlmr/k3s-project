@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mdlmr-fr-wildcard
+  namespace: traefik
+spec:
+  secretName: mdlmr-fr-wildcard-tls
+  issuerRef:
+    name: cluster-issuer
+    kind: ClusterIssuer
+  commonName: "*.mdlmr.fr"
+  dnsNames:
+    - "mdlmr.fr"
+    - "*.mdlmr.fr"

@@ -7,6 +7,7 @@ metadata:
     kubernetes.io/ingress.class: traefik
     cert-manager.io/cluster-issuer: cluster-issuer
     traefik.ingress.kubernetes.io/rewrite-target: /
+    traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
     - host: skiut.mdlmr.fr
@@ -22,4 +23,3 @@ spec:
   tls:
     - hosts:
         - skiut.mdlmr.fr
-      secretName: skiut-ingress-tls

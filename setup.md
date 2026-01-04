@@ -315,22 +315,27 @@ Les autres peuvent être définis manuellement.
 
 - Définir taint et tolérations :
   - Prom, Grafana, AlertManager, CronJobs Skiut c'est sur le worker
+- Définir request et limites
 - Mieux ranger les serviceMonitor :
   - Sois les supprimer
   - Sois les deployer dans leur namespace concerné
   - Et voir si il n'y a pas d'autres serviceMonitor sympa à deploy
 - Mieux gérer les certificats de sécruité et DNS
 - Pourquoi l'arborescende sur l'ui de argoCD n'est pas bonne ?
-- ArgoCD projects ?
+- Définir des kustomization.yaml partout ou nul part
 
 - [ ] Loki (Promtail + logcli ?)
-- [ ] Tempo
-- [ ] External DNS
+- [ ] Kubernetes dashboard
+- [ ] Tempo + Opentelemetry
+- [ ] Dashboards Grafana ArgoCD, Cloudflare, Traefik...
+- [ ] Serveur ski'ut en nodejs
+- [ ] Templatiser Ski'ut en Helm, surtout pour injecter les env
 - [ ] Kargo
 - [ ] Uptime Kuma
 - [ ] Registry Harbor
 - [ ] Gitea
 - [ ] Hosting
+- [ ] External DNS
 
 ## TODO - Website
 

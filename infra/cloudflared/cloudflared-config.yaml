@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared-config
+  namespace: infra
+data:
+  config.yaml: |
+    tunnel: mdlmr-tunnel
+    credentials-file: /etc/cloudflared/creds/credentials.json
+
+    ingress:
+      - hostname: mdlmr.fr
+        service: https://traefik.traefik.svc.cluster.local
+        originRequest:
+          noTLSVerify: false
+      - hostname: skiut.mdlmr.fr
+        service: https://traefik.traefik.svc.cluster.local
+        originRequest:
+          noTLSVerify: false
+      - hostname: skiutpma.mdlmr.fr
+        service: https://traefik.traefik.svc.cluster.local
+        originRequest:
+          noTLSVerify: false
+      - hostname: argocd.mdlmr.fr
+        service: https://traefik.traefik.svc.cluster.local
+        originRequest:
+          noTLSVerify: false
+      - hostname: grafana.mdlmr.fr
+        service: https://traefik.traefik.svc.cluster.local
+        originRequest:
+          noTLSVerify: false          
+      - service: http_status:404
