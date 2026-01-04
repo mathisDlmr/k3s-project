@@ -9,8 +9,12 @@ data:
     credentials-file: /etc/cloudflared/creds/credentials.json
 
     ingress:
-      - hostname: mdlmr.fr
-        service: https://traefik.traefik.svc.cluster.local
       - hostname: *.mdlmr.fr
         service: https://traefik.traefik.svc.cluster.local      
+        originRequest:
+          originServerName: mdlmr.fr
+      - hostname: mdlmr.fr
+        service: https://traefik.traefik.svc.cluster.local
+        originRequest:
+          originServerName: mdlmr.fr
       - service: http_status:404
