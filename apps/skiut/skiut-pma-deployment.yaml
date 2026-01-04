@@ -29,13 +29,3 @@ spec:
                 configMapKeyRef:
                   name: skiut-database-configmap
                   key: MYSQL_PORT
-            - name: PMA_USER
-              valueFrom:
-                secretKeyRef:
-                  name: skiut-database-secret
-                  key: MYSQL_USER
-            - name: PMA_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: skiut-database-secret
-                  key: MYSQL_PASSWORD
