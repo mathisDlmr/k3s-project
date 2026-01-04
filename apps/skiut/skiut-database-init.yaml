@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: skiut-database-init
+  namespace: skiut
+data:
+  01-create-monitoring-user.sql: |
+    -- Create ProxySQL monitoring user with required privileges
+    CREATE USER IF NOT EXISTS 'proxysql_monitor'@'%' IDENTIFIED BY 'proxysql_monitor_pwd';
+    GRANT SELECT, REPLICATION CLIENT ON *.* TO 'proxysql_monitor'@'%';
+    FLUSH PRIVILEGES;

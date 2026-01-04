@@ -21,6 +21,8 @@ spec:
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
+            - name: mysql-init-scripts
+              mountPath: /docker-entrypoint-initdb.d
           env:
             - name: MYSQL_DATABASE
               valueFrom:
@@ -50,3 +52,6 @@ spec:
         - name: mysql-data
           persistentVolumeClaim:
             claimName: skiut-database-pvc
+        - name: mysql-init-scripts
+          configMap:
+            name: skiut-database-init
