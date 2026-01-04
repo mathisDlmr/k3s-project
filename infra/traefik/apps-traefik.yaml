@@ -8,15 +8,15 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: https://github.com/mathisDlmr/k3s-project.git
+      targetRevision: main
+      ref: k3s-project
     - repoURL: https://traefik.github.io/charts
       chart: traefik
       targetRevision: 38.0.1
       helm:
         valueFiles:
-          - $values/infra/traefik/traefik-values.yaml
-    - repoURL: https://github.com/mathisDlmr/k3s-project.git
-      targetRevision: main
-      ref: values
+          - $k3s-project/valueFiles/traefik.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: traefik

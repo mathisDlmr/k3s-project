@@ -313,17 +313,18 @@ Les autres peuvent être définis manuellement.
 
 ## TODO
 
+- Redéfinir les resources
 - Définir taint et tolérations :
   - Prom, Grafana, AlertManager, CronJobs Skiut c'est sur le worker
-- Définir request et limites
 - Définir liveness et readiness probes
 - Fix ingress argoCD
+- Redirection skiut.mdlmr.fr -> skiut.mdlmr.fr/skiutc et idem pour mslfld.mdlmr.fr -> mdlmr.fr
 - Mieux ranger les serviceMonitor :
   - Sois les supprimer
   - Sois les deployer dans leur namespace concerné
   - Et voir si il n'y a pas d'autres serviceMonitor sympa à deploy
+- Globalement mieux ranger monitoring entre chart helm, values, overload de config, crb, dashboards, etc.
 - Définir des kustomization.yaml partout ou nul part
-- Redirection skiut.mdlmr.fr -> skiut.mdlmr.fr/skiutc et idem pour mslfld.mdlmr.fr -> mdlmr.fr
 
 - [ ] Loki (Promtail + logcli ?)
 - [ ] Kubernetes dashboard

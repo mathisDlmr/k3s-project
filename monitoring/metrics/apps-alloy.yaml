@@ -10,14 +10,13 @@ spec:
   sources:
     - repoURL: https://github.com/mathisDlmr/k3s-project.git
       targetRevision: main
-      path: monitoring/metrics/overload-config/
-      ref: values
+      ref: k3s-project
     - repoURL: https://grafana.github.io/helm-charts
       chart: alloy
       targetRevision: 1.5.1
       helm:
         valueFiles:
-          - $values/monitoring/metrics/overload-config/alloy-values.yaml
+          - $k3s-project/valueFiles/alloy.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

@@ -10,14 +10,16 @@ spec:
   sources:
     - repoURL: https://github.com/mathisDlmr/k3s-project.git
       targetRevision: main
-      path: monitoring/metrics/overload-config/
-      ref: values
+      path: monitoring/metrics/kube-prometheus-stack-overload-config/
+    - repoURL: https://github.com/mathisDlmr/k3s-project.git
+      targetRevision: main
+      ref: k3s-project
     - repoURL: https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack
       targetRevision: 77.11.1
       helm:
         valueFiles:
-          - $values/monitoring/metrics/overload-config/kube-prometheus-stack-values.yaml
+          - $k3s-project/valueFiles/kube-prometheus-stack.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

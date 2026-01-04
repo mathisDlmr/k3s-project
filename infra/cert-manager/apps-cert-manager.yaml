@@ -7,17 +7,16 @@ metadata:
     argocd.argoproj.io/instance: infra
 spec:
   project: default
-  source:
-    repoURL: https://charts.jetstack.io
-    chart: cert-manager
-    targetRevision: 1.19.2
-    helm:
-      values: |
-        installCRDs: true
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "50m"
+  sources:
+    - repoURL: https://github.com/mathisDlmr/k3s-project.git
+      targetRevision: main
+      ref: k3s-project
+    - repoURL: https://charts.jetstack.io
+      chart: cert-manager
+      targetRevision: 1.19.2
+      helm:
+        valueFiles:
+          - $k3s-project/valueFiles/cert-manager.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: infra
