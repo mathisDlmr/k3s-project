@@ -4,3 +4,5 @@ kind: Kustomization
 resources:
   - metrics/apps-prometheus-config.yaml
   - metrics/apps-kube-prometheus-stack.yaml
+  - metrics/apps-loki.yaml
+  - metrics/apps-alloy.yaml
