@@ -320,8 +320,6 @@ Les autres peuvent être définis manuellement.
   - Sois les supprimer
   - Sois les deployer dans leur namespace concerné
   - Et voir si il n'y a pas d'autres serviceMonitor sympa à deploy
-- Mieux gérer les certificats de sécruité et DNS
-- Pourquoi l'arborescende sur l'ui de argoCD n'est pas bonne ?
 - Définir des kustomization.yaml partout ou nul part
 
 - [ ] Loki (Promtail + logcli ?)
