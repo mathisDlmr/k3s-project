@@ -313,23 +313,23 @@ Les autres peuvent être définis manuellement.
 
 ## TODO
 
+- Fix ArgoCD ingress, traefik, log ingestion
 - Redéfinir les resources
 - Définir taint et tolérations :
   - Prom, Grafana, AlertManager, CronJobs Skiut c'est sur le worker
 - Définir liveness et readiness probes
-- Fix ingress argoCD
 - Redirection skiut.mdlmr.fr -> skiut.mdlmr.fr/skiutc et idem pour mslfld.mdlmr.fr -> mdlmr.fr
 - Mieux ranger les serviceMonitor :
   - Sois les supprimer
   - Sois les deployer dans leur namespace concerné
   - Et voir si il n'y a pas d'autres serviceMonitor sympa à deploy
-- Globalement mieux ranger monitoring entre chart helm, values, overload de config, crb, dashboards, etc.
+- Voir pour parser les templates de value Helm avec un LLM et voir ce qu'il peut etre interessant à garder
+- Globalement mieux ranger monitoring entre chart helm, overload de config, dashboards, etc.
 - Définir des kustomization.yaml partout ou nul part
 
-- [ ] Loki (Promtail + logcli ?)
-- [ ] Kubernetes dashboard
 - [ ] Tempo + Opentelemetry
 - [ ] Dashboards Grafana ArgoCD, Cloudflare, Traefik...
+- [ ] Kubernetes dashboard
 - [ ] TFA avec Google (https://mattdyson.org/blog/2024/02/using-traefik-with-cloudflare-tunnels/) ou Keycloak
 - [ ] Serveur ski'ut en nodejs
 - [ ] Templatiser Ski'ut en Helm, surtout pour injecter les env
