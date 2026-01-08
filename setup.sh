@@ -174,6 +174,15 @@ data:
   token: $(echo -n "$CLOUDFLARE_TUNNEL_TOKEN" | base64)
 EOF
 
+# ---------------------------
+# 10. Inotify config for log collection
+# ---------------------------
+sudo sysctl -w fs.inotify.max_user_watches=524288
+sudo sysctl -w fs.inotify.max_user_instances=512
+echo "fs.inotify.max_user_watches = 524288" | sudo tee -a /etc/sysctl.conf
+echo "fs.inotify.max_user_instances = 512" | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+
 echo "Chiffrement des secrets avec kubeseal..."
 kubeseal --controller-namespace infra --controller-name sealed-secrets --format yaml < ./infra/cloudflared/cloudflare-api-token-secret.yaml > ./infra/cloudflared/cloudflare-api-token-sealed-secret.yaml
 kubeseal --controller-namespace infra --controller-name sealed-secrets --format yaml < ./infra/cloudflared/cloudflare-tunnel-token-secret.yaml > ./infra/cloudflared/cloudflare-tunnel-token-sealed-secret.yaml

@@ -127,4 +127,13 @@ echo "[6/6] Vérification des nodes K3S..."
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 sudo kubectl get nodes
 
+# ---------------------------
+# 7. Inotify config for log collection
+# ---------------------------
+sudo sysctl -w fs.inotify.max_user_watches=524288
+sudo sysctl -w fs.inotify.max_user_instances=512
+echo "fs.inotify.max_user_watches = 524288" | sudo tee -a /etc/sysctl.conf
+echo "fs.inotify.max_user_instances = 512" | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+
 echo "Setup worker terminé !"
