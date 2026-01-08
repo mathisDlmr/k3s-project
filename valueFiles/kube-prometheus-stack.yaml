@@ -1,17 +1,17 @@
 defaultRules:
   create: true
-  rules:
-    kubeControllerManager: false # Règles problématiques pour k3s
-    kubeProxy: false
-    kubeSchedulerAlerting: false
-    alertmanager: false
-  disabled:
-    KubeControllerManagerDown: true
-    KubeProxyDown: true
-    KubeSchedulerDown: true # Jusqu'à ici toutes les règles sont problm avec k3s
-    CPUThrottlingHigh: true
-    AlertmanagerDown: true
-    AlertmanagerClusterDown: true
+  # rules:
+  #   kubeControllerManager: false
+  #   kubeProxy: false
+  #   kubeSchedulerAlerting: false
+  #   alertmanager: false
+  # disabled:
+  #   KubeControllerManagerDown: true
+  #   KubeProxyDown: true
+  #   KubeSchedulerDown: true
+  #   CPUThrottlingHigh: true
+  #   AlertmanagerDown: true
+  #   AlertmanagerClusterDown: true
 
 prometheus:
   prometheusSpec:
@@ -37,7 +37,7 @@ prometheus:
         cpu: "100m"
 
 alertmanager:
-  enabled: false
+  enabled: true
 
 grafana:
   defaultDashboardsTimezone: "Europe/Paris"
