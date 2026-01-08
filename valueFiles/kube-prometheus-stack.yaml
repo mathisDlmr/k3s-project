@@ -16,7 +16,7 @@ defaultRules:
 prometheus:
   prometheusSpec:
     replicas: 1
-    scrapeInterval: 15s
+    scrapeInterval: 30s
     evaluationInterval: 15s
     serviceMonitorSelector: {}
     serviceMonitorNamespaceSelector: {}

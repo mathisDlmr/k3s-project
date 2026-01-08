@@ -25,16 +25,14 @@ spec:
     namespace: monitoring
   syncPolicy:
     automated:
-      enabled: false
-    # automated:
-    #   selfHeal: true
-    #   prune: true
-    # syncOptions:
-    #   - CreateNamespace=true
-    #   - ServerSideApply=true
-    # retry:
-    #   limit: 5
-    #   backoff:
-    #     duration: 5s
-    #     factor: 2
-    #     maxDuration: 3m
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
