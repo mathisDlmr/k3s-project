@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: monitoring-stack
+  name: kube-prometheus-stack
   namespace: argocd
   annotations:
     argocd.argoproj.io/instance: monitoring
@@ -16,7 +16,7 @@ spec:
       ref: k3s-project
     - repoURL: https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack
-      targetRevision: 77.11.1
+      targetRevision: 80.13.2
       helm:
         valueFiles:
           - $k3s-project/valueFiles/kube-prometheus-stack.yaml
