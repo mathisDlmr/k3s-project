@@ -2,13 +2,6 @@ name: ArgoCD Diff Preview
 
 on:
   pull_request:
-    paths:
-      - "apps/**"
-      - "argocd/**"
-      - "infra/**"
-      - "meta/**"
-      - "monitoring/**"
-      - "valueFiles/**"
     paths-ignore:
       - "**/*.md"
 
