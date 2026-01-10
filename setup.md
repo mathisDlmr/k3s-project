@@ -313,27 +313,31 @@ Les autres peuvent être définis manuellement.
 
 ## TODO
 
-- Fix ArgoCD ingress, traefik, log ingestion
 - Redéfinir les resources
 - Définir taint et tolérations :
   - Prom, Grafana, AlertManager, CronJobs Skiut c'est sur le worker
 - Définir liveness et readiness probes
-- Redirection skiut.mdlmr.fr -> skiut.mdlmr.fr/skiutc et idem pour mslfld.mdlmr.fr -> mdlmr.fr
+- Redirection skiut.mdlmr.fr -> skiut.mdlmr.fr/skiutc et idem pour nimportequoi.mdlmr.fr -> mdlmr.fr
 - Mieux ranger les serviceMonitor :
   - Sois les supprimer
   - Sois les deployer dans leur namespace concerné
   - Et voir si il n'y a pas d'autres serviceMonitor sympa à deploy
-- Voir pour parser les templates de value Helm avec un LLM et voir ce qu'il peut etre interessant à garder
+- Voir pour parser les templates de value Helm (Traefik, Alloy, Loki, etc.) avec un LLM et voir ce qu'il peut etre interessant à garder
 - Globalement mieux ranger monitoring entre chart helm, overload de config, dashboards, etc.
 - Définir des kustomization.yaml partout ou nul part
 
-- [ ] Tempo + Opentelemetry
+- [ ] Voir pour des métriques sur tous les services : loki, tempo, traefik, etc.
 - [ ] Dashboards Grafana ArgoCD, Cloudflare, Traefik...
+- [ ] Redis global
+- [ ] ELK pour se former dessus en parallèle
 - [ ] Kubernetes dashboard
+- [ ] Sysdig et/ou Falco et/ou trivy operator
+- [ ] Minio et/ou Longhorn pour du stockage S3 et des PV dynamiques
 - [ ] TFA avec Google (https://mattdyson.org/blog/2024/02/using-traefik-with-cloudflare-tunnels/) ou Keycloak
 - [ ] Serveur ski'ut en nodejs
 - [ ] Templatiser Ski'ut en Helm, surtout pour injecter les env
 - [ ] Kargo
+- [ ] Chaos Mesh, Kubecost,kube-resource-report, kube-bench, etc.
 - [ ] Uptime Kuma
 - [ ] Registry Harbor
 - [ ] Gitea
