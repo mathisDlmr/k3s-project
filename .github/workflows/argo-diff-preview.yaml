@@ -4,6 +4,7 @@ on:
   pull_request:
     paths-ignore:
       - "**/*.md"
+      - .github/**
 
 jobs:
   build:
@@ -32,7 +33,16 @@ jobs:
             -v $(pwd)/output:/output \
             -e TARGET_BRANCH=refs/pull/${{ github.event.number }}/merge \
             -e REPO=${{ github.repository }} \
-            dagandersen/argocd-diff-preview:v0.1.21
+            dagandersen/argocd-diff-preview:v0.1.21 \
+            --diff-ignore "checksum"
+
+      - name: Upload raw output as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: argocd-diff-output
+          path: output/
+          if-no-files-found: warn
+          retention-days: 7
 
       - name: Post diff as comment
         run: |
