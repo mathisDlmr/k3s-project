@@ -332,6 +332,7 @@ Les autres peuvent être définis manuellement.
 - [ ] ELK pour se former dessus en parallèle
 - [ ] Kubernetes dashboard
 - [ ] Sysdig et/ou Falco et/ou trivy operator
+- [ ] Configuration Alloy boostée aux hormones : https://grafana.com/docs/opentelemetry/collector/grafana-alloy/
 - [ ] Minio et/ou Longhorn pour du stockage S3 et des PV dynamiques
 - [ ] TFA avec Google (https://mattdyson.org/blog/2024/02/using-traefik-with-cloudflare-tunnels/) ou Keycloak
 - [ ] Serveur ski'ut en nodejs
