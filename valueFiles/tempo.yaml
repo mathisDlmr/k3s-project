@@ -81,4 +81,4 @@ persistence:
   size: 10Gi
   accessModes:
     - ReadWriteOnce
-  storageClassName: hostpath
+  storageClassName: local-path

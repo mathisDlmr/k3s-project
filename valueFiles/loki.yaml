@@ -35,7 +35,7 @@ loki:
   persistence:
     enabled: true
     size: 10Gi
-    storageClassName: hostpath
+    storageClassName: local-path
   pattern_ingester:
     enabled: true
 
