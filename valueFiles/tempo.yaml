@@ -1,0 +1,84 @@
+replicas: 1
+
+tempo:
+  multitenancyEnabled: false
+  reportingEnabled: false
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+
+  server:
+    http_listen_port: 3200
+
+  retention: 168h
+
+  storage:
+    trace:
+      backend: local
+      local:
+        path: /var/tempo/traces
+      wal:
+        path: /var/tempo/wal
+
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:4317
+        http:
+          endpoint: 0.0.0.0:4318
+
+  ingester:
+    max_block_duration: 5m
+    trace_idle_period: 30s
+
+  compactor:
+    compaction:
+      block_retention: 168h
+
+config: |
+  multitenancy_enabled: false
+
+  usage_report:
+    reporting_enabled: false
+
+  server:
+    http_listen_port: 3200
+
+  distributor:
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+          http:
+
+  ingester:
+    trace_idle_period: 30s
+    max_block_duration: 5m
+
+  compactor:
+    compaction:
+      block_retention: 168h
+
+  storage:
+    trace:
+      backend: local
+      local:
+        path: /var/tempo/traces
+      wal:
+        path: /var/tempo/wal
+
+service:
+  type: ClusterIP
+
+persistence:
+  enabled: true
+  size: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: hostpath
