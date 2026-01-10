@@ -11,6 +11,47 @@ alloy:
         role = "pod"
       }
 
+      discovery.relabel "pods" {
+        targets = discovery.kubernetes.pods.targets
+
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          action = "replace"
+          target_label = "namespace"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          action = "replace"
+          target_label = "pod"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_name"]
+          action = "replace"
+          target_label = "container"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app_kubernetes_io_name"]
+          action = "replace"
+          target_label = "app"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app"]
+          action = "replace"
+          target_label = "app"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_namespace", "app"]
+          separator = "/"
+          action = "replace"
+          target_label = "job"
+        }
+      }
+
       loki.source.kubernetes "pods" {
         targets    = discovery.relabel.pods.output
         forward_to = [loki.write.default.receiver]
