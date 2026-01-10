@@ -1,3 +1,5 @@
+fullnameOverride: kube-prometheus-stack
+
 defaultRules:
   create: true
   # rules:
