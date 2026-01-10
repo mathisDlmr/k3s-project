@@ -36,7 +36,7 @@ alloy:
 
       otelcol.service "otel" {
         pipelines {
-          traces = {
+          traces {
             receivers  = [otelcol.receiver.otlp.default]
             exporters  = [otelcol.exporter.otlp.tempo]
           }
