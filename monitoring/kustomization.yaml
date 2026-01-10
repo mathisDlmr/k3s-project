@@ -6,3 +6,4 @@ resources:
   - metrics/apps-kube-prometheus-stack.yaml
   - metrics/apps-loki.yaml
   - metrics/apps-alloy.yaml
+  - metrics/apps-tempo.yaml
