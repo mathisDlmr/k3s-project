@@ -90,6 +90,11 @@ spec:
                 secretKeyRef:
                   name: skiut-backend-secret
                   key: OAUTH_CLIENT_SECRET
+            - name: WEATHER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: skiut-backend-secret
+                  key: WEATHER_API_KEY
       volumes:
         - name: laravel-storage
           persistentVolumeClaim:
