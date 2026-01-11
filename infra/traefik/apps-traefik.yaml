@@ -13,7 +13,7 @@ spec:
       ref: k3s-project
     - repoURL: https://traefik.github.io/charts
       chart: traefik
-      targetRevision: v38.0.1
+      targetRevision: 38.0.2
       helm:
         valueFiles:
           - $k3s-project/valueFiles/traefik.yaml
