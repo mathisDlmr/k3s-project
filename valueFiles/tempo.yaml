@@ -48,6 +48,7 @@ tempo:
     defaults:
       metrics_generator:
         processors:
+          - local-blocks
           - service-graphs
           - span-metrics
         collection_interval: 15s
