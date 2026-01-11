@@ -1,7 +1,9 @@
 replicas: 1
+
 tempo:
   multitenancyEnabled: false
   reportingEnabled: false
+
   resources:
     requests:
       cpu: 100m
@@ -9,8 +11,14 @@ tempo:
     limits:
       cpu: 1000m
       memory: 1Gi
+
+  metricsGenerator:
+    enabled: true
+    remoteWriteUrl: ""
+
   server:
     http_listen_port: 3200
+
   retention: 168h
 
   storage:
@@ -33,40 +41,17 @@ tempo:
     max_block_duration: 5m
     trace_idle_period: 30s
 
-  compactor:
-    compaction:
-      block_retention: 168h
+  querier: {}
 
-  metrics_generator:
-    enabled: true
-    storage:
-      path: "/var/tempo/generator/wal"
-    ring:
-      kvstore:
-        store: inmemory
-    processor:
-      service_graphs:
-        enabled: true
-        wait: 10s
-        max_items: 10000
-      span_metrics:
-        enabled: true
-        dimensions:
-          - name: http.method
-          - name: http.status_code
-        histogram_buckets: [0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8]
-      local_blocks:
-        enabled: true
-        flush_check_period: 10s
-        complete_block_timeout: 30s
-        flush_to_storage: true
+  queryFrontend: {}
 
   overrides:
     defaults:
       metrics_generator:
-        processors: [service-graphs, span-metrics, local-blocks]
+        processors:
+          - service-graphs
+          - span-metrics
         collection_interval: 15s
-        disable_collection: false
 
 service:
   type: ClusterIP
@@ -77,3 +62,7 @@ persistence:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path
+
+serviceMonitor:
+  enabled: true
+  interval: 30s
