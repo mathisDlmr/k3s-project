@@ -14,7 +14,6 @@ tempo:
 
   metricsGenerator:
     enabled: true
-    remoteWriteUrl: ""
 
   server:
     http_listen_port: 3200
