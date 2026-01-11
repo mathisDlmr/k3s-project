@@ -42,16 +42,24 @@ tempo:
       block_retention: 168h
 
   metrics_generator:
-    registry:
-      external_labels:
-        source: tempo
+    enabled: true
     storage:
-      path: /var/tempo/metrics
+      path: "/tmp/tempo"
+      remote_write:
+        - url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/write
+    traces_storage:
+      path: "/tmp/traces"
     processor:
-      service_graphs:
-        enabled: true
-      span_metrics:
-        enabled: true
+      local_blocks:
+        flush_to_storage: true
+
+  overrides:
+    defaults:
+      metrics_generator:
+        processors:
+          - local-blocks
+          - service-graphs
+          - span-metrics
 
 service:
   type: ClusterIP
