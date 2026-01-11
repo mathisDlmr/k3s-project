@@ -1,9 +1,7 @@
 replicas: 1
-
 tempo:
   multitenancyEnabled: false
   reportingEnabled: false
-
   resources:
     requests:
       cpu: 100m
@@ -11,10 +9,8 @@ tempo:
     limits:
       cpu: 1000m
       memory: 1Gi
-
   server:
     http_listen_port: 3200
-
   retention: 168h
 
   storage:
@@ -44,22 +40,33 @@ tempo:
   metrics_generator:
     enabled: true
     storage:
-      path: "/tmp/tempo"
-      remote_write:
-        - url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/write
-    traces_storage:
-      path: "/tmp/traces"
+      path: "/var/tempo/generator/wal"
+    ring:
+      kvstore:
+        store: inmemory
     processor:
+      service_graphs:
+        enabled: true
+        wait: 10s
+        max_items: 10000
+      span_metrics:
+        enabled: true
+        dimensions:
+          - name: http.method
+          - name: http.status_code
+        histogram_buckets: [0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8]
       local_blocks:
+        enabled: true
+        flush_check_period: 10s
+        complete_block_timeout: 30s
         flush_to_storage: true
 
   overrides:
     defaults:
       metrics_generator:
-        processors:
-          - local-blocks
-          - service-graphs
-          - span-metrics
+        processors: [service-graphs, span-metrics, local-blocks]
+        collection_interval: 15s
+        disable_collection: false
 
 service:
   type: ClusterIP

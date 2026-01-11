@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: tempo-monitor
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: tempo
+  endpoints:
+    - port: prom-metrics
+      scheme: http
+      interval: 30s
+      path: /metrics-generator/metrics
