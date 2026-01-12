@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: monitoring
   namespace: argocd
+  labels:
+    argocd.argoproj.io/instance: monitoring
+    app.kubernetes.io/part-of: meta
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:

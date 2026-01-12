@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: prometheus-config
   namespace: argocd
+  labels:
+    argocd.argoproj.io/instance: prometheus-config
+    app.kubernetes.io/part-of: monitoring
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:

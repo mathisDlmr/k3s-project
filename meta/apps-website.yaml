@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: website
   namespace: argocd
+  labels:
+    argocd.argoproj.io/instance: website
+    app.kubernetes.io/part-of: meta
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
