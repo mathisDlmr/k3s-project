@@ -330,6 +330,7 @@ Les autres peuvent être définis manuellement.
 - [ ] Dashboards Grafana ArgoCD, Cloudflare, Traefik...
 - [ ] Redis global
 - [ ] ELK pour se former dessus en parallèle
+- [ ] OTel en parallele de Alloy (et pour log/metrics/traces Filebeat, metricbeat, APM server)
 - [ ] Kubernetes dashboard
 - [ ] Sysdig et/ou Falco et/ou trivy operator
 - [ ] Configuration Alloy boostée aux hormones : https://grafana.com/docs/opentelemetry/collector/grafana-alloy/
