@@ -29,7 +29,7 @@
 - [ ] Kubernetes dashboard
 - [ ] Sysdig et/ou Falco et/ou trivy operator (app "security")
 - [ ] Configuration Alloy boostée aux hormones : https://grafana.com/docs/opentelemetry/collector/grafana-alloy/
-- [ ] Minio et/ou Longhorn pour du stockage S3 et des PV dynamiques (app "utils")
+- [ ] Minio et/ou Longhorn et/ou Ceph pour du stockage S3 et des PV dynamiques (app "utils")
 - [ ] TFA avec Google (https://mattdyson.org/blog/2024/02/using-traefik-with-cloudflare-tunnels/) ou Keycloak
 - [ ] Serveur ski'ut en nodejs
 - [ ] Templatiser Ski'ut en Helm, surtout pour injecter les env
