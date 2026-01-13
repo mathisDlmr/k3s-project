@@ -16,7 +16,7 @@ spec:
       ref: k3s-project
     - repoURL: https://grafana.github.io/helm-charts
       chart: tempo
-      targetRevision: 1.24.1
+      targetRevision: 1.24.3
       helm:
         valueFiles:
           - $k3s-project/valueFiles/tempo.yaml
