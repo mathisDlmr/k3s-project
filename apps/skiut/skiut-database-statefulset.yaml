@@ -49,6 +49,10 @@ spec:
             requests:
               memory: "512Mi"
               cpu: "50m"
+      volumes:
+        - name: mysql-init-scripts
+          configMap:
+            name: skiut-database-init
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
