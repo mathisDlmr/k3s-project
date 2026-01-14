@@ -24,7 +24,7 @@
 - [ ] Voir pour des métriques sur tous les services : loki, tempo, traefik, etc.
 - [ ] Dashboards Grafana ArgoCD, Cloudflare, Traefik...
 - [ ] Redis global (app "utils")
-- [ ] ELK pour se former dessus en parallèle (app "monitoring-v2")
+- [ ] EFK (Elasticsearch, FluentBit, Kibana) pour se former dessus en parallèle (app "monitoring-v2")
 - [ ] OTel en parallele de Alloy (et pour log/metrics/traces Filebeat, metricbeat, APM server) (app "monitoring-v2")
 - [ ] Kubernetes dashboard
 - [ ] Sysdig et/ou Falco et/ou trivy operator (app "security")
