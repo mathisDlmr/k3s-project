@@ -4,22 +4,6 @@ tempo:
   multitenancyEnabled: false
   reportingEnabled: false
 
-  resources:
-    requests:
-      cpu: 100m
-      memory: 256Mi
-    limits:
-      cpu: 1000m
-      memory: 1Gi
-
-  metricsGenerator:
-    enabled: true
-
-  server:
-    http_listen_port: 3200
-
-  retention: 168h
-
   storage:
     trace:
       backend: local
@@ -28,6 +12,26 @@ tempo:
       wal:
         path: /var/tempo/wal
 
+  retention: 168h # 7 days
+
+  metricsGenerator:
+    enabled: true
+    registry:
+      collection_interval: 15s
+      stale_duration: 15m
+    storage:
+      path: /tmp/tempo/generator/wal
+    remote_write:
+      - url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/write
+        send_exemplars: true
+    processor:
+      service_graphs:
+        enable_client_server_prefix: true
+        dimensions: ["http.method", "http.status_code"]
+      span_metrics:
+        enable_target_info: true
+        dimensions: ["http.method", "http.status_code"]
+
   receivers:
     otlp:
       protocols:
@@ -35,6 +39,25 @@ tempo:
           endpoint: 0.0.0.0:4317
         http:
           endpoint: 0.0.0.0:4318
+    jaeger:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:14250
+        thrift_http:
+          endpoint: 0.0.0.0:14268
+    zipkin:
+      endpoint: 0.0.0.0:9411
+
+  server:
+    http_listen_port: 3200
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
 
   ingester:
     max_block_duration: 5m

@@ -4,6 +4,7 @@ metadata:
   name: skiut-database
   namespace: skiut
 spec:
+  serviceName: skiut-database
   replicas: 1
   selector:
     matchLabels:
@@ -49,9 +50,27 @@ spec:
               memory: "512Mi"
               cpu: "50m"
       volumes:
-        - name: mysql-data
-          persistentVolumeClaim:
-            claimName: skiut-database-pvc
         - name: mysql-init-scripts
           configMap:
             name: skiut-database-init
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node.lifecycle
+                    operator: In
+                    values:
+                      - stable
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: ""
+        resources:
+          requests:
+            storage: 10Gi
+        selector:
+          matchLabels:
+            app: skiut

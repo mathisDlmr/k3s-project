@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: skiut-stable-pv
+  labels:
+    app: skiut
+spec:
+  capacity:
+    storage: 64Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  local:
+    path: /var/skiut-stable-pv
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node.lifecycle
+              operator: In
+              values:
+                - stable

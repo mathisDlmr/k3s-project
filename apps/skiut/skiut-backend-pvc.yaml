@@ -14,5 +14,8 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
-  storageClassName: local-path
+      storage: 32Gi
+  storageClassName: ""
+  selector:
+    matchLabels:
+      app: skiut

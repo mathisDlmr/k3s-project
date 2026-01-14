@@ -5,6 +5,7 @@ alloy:
     content: |
       logging {
         level = "info"
+        format = "logfmt"
       }
 
       discovery.kubernetes "pods" {
