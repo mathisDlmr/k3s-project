@@ -35,9 +35,9 @@ spec:
             - name: APP_URL
               value: https://skiut.mdlmr.fr
             - name: USER_ID
-              value: "1352"
+              value: "24"
             - name: APP_NO_LOGIN
-              value: "false"
+              value: "true"
             - name: DB_CONNECTION
               value: mysql
             - name: DB_HOST
