@@ -1,20 +1,15 @@
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: stable-pv
-provisioner: kubernetes.io/no-provisioner
-volumeBindingMode: WaitForFirstConsumer
----
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: stable-pv
+  labels:
+    app: skiut
 spec:
   capacity:
     storage: 64Gi
   accessModes:
     - ReadWriteOnce
-  storageClassName: stable-pv
+  storageClassName: local-path
   local:
     path: /var/stable-pv
   nodeAffinity:

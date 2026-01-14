@@ -15,4 +15,7 @@ spec:
   resources:
     requests:
       storage: 32Gi
-  storageClassName: stable-pv
+  storageClassName: local-path
+  selector:
+    matchLabels:
+      app: skiut
