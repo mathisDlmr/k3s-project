@@ -1,6 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
+  namespace: skiut
   name: skiut-backend-monitor
 spec:
   selector:
@@ -12,7 +13,3 @@ spec:
       interval: 15s
       path: /skiutc/metrics
       honorLabels: true
-  namespaceSelector:
-    matchNames:
-      - skiut
-  jobLabel: app
