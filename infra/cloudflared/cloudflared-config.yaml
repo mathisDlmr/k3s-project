@@ -6,7 +6,6 @@ metadata:
 data:
   config.yaml: |
     tunnel: mdlmr-tunnel
-    protocol: http2
     credentials-file: /etc/cloudflared/creds/credentials.json
     ingress:
       - hostname: "*.mdlmr.fr"

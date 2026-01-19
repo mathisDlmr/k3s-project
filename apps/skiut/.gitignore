@@ -1,3 +1,4 @@
 !gitignore
 skiut-backend-secret.yaml
 skiut-database-secret.yaml
+skiut-google-service-account-secret.yaml
