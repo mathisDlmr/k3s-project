@@ -3,12 +3,14 @@ kind: Service
 metadata:
   name: skiut-backend
   namespace: skiut
+  labels:
+    app: skiut-backend
 spec:
   selector:
     app: skiut-backend
   ports:
-  - name: http
-    port: 80
-    targetPort: 80
-    protocol: TCP
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
   type: ClusterIP
