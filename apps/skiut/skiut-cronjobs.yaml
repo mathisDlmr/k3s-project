@@ -10,7 +10,7 @@ spec:
       template:
         spec:
           containers:
-            - name: scheduler
+            - name: skiut-permanence-reminder
               image: ghcr.io/ski-utc/server-skiut-2026:17df64d915544f54057e7738a45fb6bebd34b97d
               command: ["php", "artisan", "permanence:send-reminders"]
               volumeMounts:
@@ -93,8 +93,8 @@ spec:
       template:
         spec:
           containers:
-            - name: scheduler
-              image: ghcr.io/ski-utc/server-skiut-2026:83f25ab91e464afadaace5fe102068cd468827d1
+            - name: skiut-meeting-reminder
+              image: ghcr.io/ski-utc/server-skiut-2026:be1bb5a1d88b37024806678156f96545a86cd910
               command:
                 [
                   "php",
