@@ -86,7 +86,7 @@ kind: CronJob
 metadata:
   name: skiut-meeting-reminder-cronjob
 spec:
-  schedule: "00 19 * * *"
+  schedule: "30 18 * * *"
   jobTemplate:
     spec:
       backoffLimit: 1
@@ -101,7 +101,7 @@ spec:
                   "artisan",
                   "notification:send-to-members",
                   "--title='Réunion Asso dans 30 minutes !'",
-                  "--text='Rendez-vous en chambre 166 à 19h30 pour la réunion asso'",
+                  "--text='Rendez-vous en chambre 166 à 20h pour la réunion asso'",
                 ]
               volumeMounts:
                 - name: laravel-storage
