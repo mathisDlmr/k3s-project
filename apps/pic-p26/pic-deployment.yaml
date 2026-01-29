@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: pic
-          image: docker.io/mathis0dlmr/pic-p26
+          image: ghcr.io/mathisdlmr/pic-p26:bca1aeb9377cd7414be6766e8bdbdd44e5f0c553
           ports:
             - containerPort: 3000
           env:
