@@ -7,7 +7,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
-    - host: mdlmr.fr
+    - host: pic.mdlmr.fr
       http:
         paths:
           - path: /
@@ -20,4 +20,4 @@ spec:
 
   tls:
     - hosts:
-        - mdlmr.fr
+        - pic.mdlmr.fr
