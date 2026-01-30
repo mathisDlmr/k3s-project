@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: pic
-          image: ghcr.io/mathisdlmr/pic-p26:bca1aeb9377cd7414be6766e8bdbdd44e5f0c553
+          image: ghcr.io/mathisdlmr/pic-p26:3399db9652a624f1166aac072129ae9b9e1b07c3
           ports:
             - containerPort: 3000
           env:
