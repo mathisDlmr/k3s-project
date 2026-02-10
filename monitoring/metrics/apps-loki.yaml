@@ -16,7 +16,7 @@ spec:
       ref: k3s-project
     - repoURL: https://grafana.github.io/helm-charts
       chart: loki
-      targetRevision: 6.52.0
+      targetRevision: 6.53.0
       helm:
         valueFiles:
           - $k3s-project/valueFiles/loki.yaml
