@@ -1,28 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: loki
+  name: pic
   namespace: argocd
   labels:
-    argocd.argoproj.io/instance: loki
-    app.kubernetes.io/part-of: monitoring
+    argocd.argoproj.io/instance: pic
+    app.kubernetes.io/part-of: meta
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  sources:
-    - repoURL: https://github.com/mathisDlmr/k3s-project.git
-      targetRevision: main
-      ref: k3s-project
-    - repoURL: https://grafana.github.io/helm-charts
-      chart: loki
-      targetRevision: 6.53.0
-      helm:
-        valueFiles:
-          - $k3s-project/valueFiles/loki.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring
+    namespace: pic
+  source:
+    repoURL: https://github.com/mathisDlmr/k3s-project.git
+    targetRevision: main
+    path: apps/pic-p26/
   syncPolicy:
     automated:
       selfHeal: true
