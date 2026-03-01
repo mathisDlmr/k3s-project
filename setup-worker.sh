@@ -115,6 +115,8 @@ sudo ufw allow in on tailscale0
 echo "[5/6] Ajout au cluster K3S..."
 curl -sfL https://get.k3s.io | sh -s - agent \
   --server https://$CP_IP:6443 \
+  --node-ip $TAILSCALE_IP \
+  --flannel-iface tailscale0 \
   --token $K3S_TOKEN \
   --node-name $NODE_NAME
 

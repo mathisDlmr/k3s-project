@@ -102,6 +102,8 @@ echo "IP Tailscale détectée : $TAILSCALE_IP"
 # ---------------------------
 curl -sfL https://get.k3s.io | sh -s - server \
   --node-name "$CP_NODE_NAME" \
+  --node-ip $TAILSCALE_IP \
+  --flannel-iface tailscale0 \
   --tls-san 127.0.0.1 \
   --tls-san localhost \
   --tls-san "$TAILSCALE_IP" \

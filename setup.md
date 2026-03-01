@@ -181,6 +181,8 @@ sudo ufw allow in on tailscale0
 ```bash
 curl -sfL https://get.k3s.io | sh -s - server \
   --node-name <CP_NODE_NAME> \
+  --node-ip <CP_TAILSCALE_IP> \
+  --flannel-iface tailscale0 \
   --tls-san 127.0.0.1 \
   --tls-san localhost \
   --tls-san <IP_LAN> \
@@ -209,6 +211,8 @@ Sur le noeud worker :
 ```bash
 curl -sfL https://get.k3s.io | sh -s - agent \
   --server https://<CP_TAILSCALE_IP>:6443 \
+  --node-ip <WORKER_TAILSCALE_IP> \
+  --flannel-iface tailscale0 \
   --token <TOKEN> \
   --node-name <WORKER_NODE_NAME>
 ```
@@ -226,14 +230,14 @@ Exemple avec
 
 ```bash
 kubectl label node <CP_NODE_NAME> \
-  node-role=stable \
-  node-power=high
+  node.lifecycle=stable \
+  node.power=high
 
 kubectl label node <WORKER_NODE_NAME> \
-  node-role=unstable \
-  node-power=low
+  node.lifecycle=unstable \
+  node.power=low
 
-kubectl taint node <CP_NODE_NAME> \
+kubectl taint node <WORKER_NODE_NAME> \
   instability=true:NoSchedule
 ```
 
