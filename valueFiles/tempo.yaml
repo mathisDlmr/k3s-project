@@ -65,7 +65,9 @@ tempo:
 
   querier: {}
 
-  queryFrontend: {}
+  queryFrontend:
+    metrics:
+      max_duration: 24h
 
   overrides:
     defaults:
