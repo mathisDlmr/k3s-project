@@ -1,0 +1,49 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tutut-app-ingress
+  namespace: tutut
+  labels:
+    app: tutut
+    component: app
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/rewrite-target: /
+    traefik.ingress.kubernetes.io/router.tls: "true"
+  rules:
+    - host: tutut.mdlmr.fr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tutut-app
+                port:
+                  name: http
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tutut-phpmyadmin-ingress
+  namespace: tutut
+  labels:
+    app: tutut
+    component: phpmyadmin
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/rewrite-target: /
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  rules:
+    - host: pma.tutut.mdlmr.fr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tutut-phpmyadmin
+                port:
+                  name: http

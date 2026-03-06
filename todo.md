@@ -28,8 +28,13 @@
 - [ ] OTel en parallele de Alloy (et pour log/metrics/traces Filebeat, metricbeat, APM server) (app "monitoring-v2")
 - [ ] Kubernetes dashboard
 - [ ] Sysdig et/ou Falco et/ou trivy operator (app "security")
+- [ ] Sonarqube
 - [ ] Configuration Alloy boostée aux hormones : https://grafana.com/docs/opentelemetry/collector/grafana-alloy/
 - [ ] Minio et/ou Longhorn et/ou Ceph pour du stockage S3 et des PV dynamiques (app "utils")
+- [ ] ArgoWorkflow ou Apache Workflow
+- [ ] Istio /Linkerd + Kcert
+- [ ] Jaeger
+- [ ] Tools Go
 - [ ] TFA avec Google (https://mattdyson.org/blog/2024/02/using-traefik-with-cloudflare-tunnels/) ou Keycloak
 - [ ] Serveur ski'ut en nodejs
 - [ ] Templatiser Ski'ut en Helm, surtout pour injecter les env
@@ -39,6 +44,7 @@
 - [ ] Registry Harbor
 - [ ] Gitea
 - [ ] Hosting
+- [ ] Rancher pour du multi node ? Karpenter ?
 - [ ] External DNS
 
 ## TODO - Website

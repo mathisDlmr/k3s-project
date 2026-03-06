@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tutut-app
+  namespace: tutut
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tutut
+      component: app
+  template:
+    metadata:
+      labels:
+        app: tutut
+        component: app
+    spec:
+      containers:
+        - name: tutut
+          image: docker.io/mathisdlmr/tutut:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+          envFrom:
+            - configMapRef:
+                name: tutut-config
+          env:
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tutut-secrets
+                  key: APP_KEY
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: tutut-secrets
+                  key: MYSQL_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tutut-secrets
+                  key: MYSQL_PASSWORD
+            - name: OAUTH_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: tutut-secrets
+                  key: OAUTH_CLIENT_ID
+            - name: OAUTH_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: tutut-secrets
+                  key: OAUTH_CLIENT_SECRET
+            - name: API_UTCRAWL_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tutut-secrets
+                  key: API_UTCRAWL_KEY
+            - name: MAIL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: tutut-secrets
+                  key: MAIL_HOST
+            - name: MAIL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: tutut-secrets
+                  key: MAIL_PORT
+            - name: MAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: tutut-secrets
+                  key: MAIL_USERNAME
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tutut-secrets
+                  key: MAIL_PASSWORD
+            - name: MAIL_FROM_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: tutut-secrets
+                  key: MAIL_FROM_ADDRESS
+          volumeMounts:
+            - name: tutut-storage
+              mountPath: /var/www/html/storage
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+      volumes:
+        - name: tutut-storage
+          persistentVolumeClaim:
+            claimName: tutut-storage-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tutut-app
+  namespace: tutut
+  labels:
+    app: tutut
+    component: app
+spec:
+  selector:
+    app: tutut
+    component: app
+  ports:
+    - port: 80
+      targetPort: 8080
+      name: http
