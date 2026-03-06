@@ -10,6 +10,7 @@ metadata:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/rewrite-target: /
     traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
   rules:
     - host: tutut.mdlmr.fr
       http:
