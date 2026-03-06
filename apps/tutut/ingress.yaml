@@ -41,7 +41,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
-    - host: pma.tutut.mdlmr.fr
+    - host: tutut-pma.mdlmr.fr
       http:
         paths:
           - path: /
@@ -53,4 +53,4 @@ spec:
                   name: http
   tls:
     - hosts:
-        - pma.tutut.mdlmr.fr
+        - tutut-pma.mdlmr.fr

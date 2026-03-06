@@ -15,6 +15,18 @@ spec:
         app: tutut
         component: app
     spec:
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              "chown -R 33:33 /var/www/html/storage && chmod -R 777 /var/www/html/storage",
+            ]
+          volumeMounts:
+            - name: tutut-storage
+              mountPath: /var/www/html/storage
       containers:
         - name: tutut
           image: docker.io/mathisdlmr/tutut:latest
