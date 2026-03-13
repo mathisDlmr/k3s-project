@@ -21,6 +21,7 @@
 
 ## FEAT
 
+- [ ] Remplacer Flannel par Cillium pour le CNI (et voir si y a pas d'autres trucs pourris qui trainent
 - [ ] Voir pour des métriques sur tous les services : loki, tempo, traefik, etc.
 - [ ] Dashboards Grafana ArgoCD, Cloudflare, Traefik...
 - [ ] Redis global (app "utils")
@@ -30,7 +31,7 @@
 - [ ] Sysdig et/ou Falco et/ou trivy operator (app "security")
 - [ ] Sonarqube
 - [ ] Configuration Alloy boostée aux hormones : https://grafana.com/docs/opentelemetry/collector/grafana-alloy/
-- [ ] Minio et/ou Longhorn et/ou Ceph pour du stockage S3 et des PV dynamiques (app "utils")
+- [ ] Minio et Longhorn pour du stockage S3 et des PV dynamiques (app "utils")
 - [ ] ArgoWorkflow ou Apache Workflow
 - [ ] Istio /Linkerd + Kcert
 - [ ] Jaeger
