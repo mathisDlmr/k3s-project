@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-bootstrap
+  name: meta
   namespace: argocd
   labels:
     app.kubernetes.io/part-of: argocd
   annotations:
-    description: "Application bootstrap déployée à la main — déploie le dossier argocd/ qui contient le self-management d'ArgoCD"
+    argocd.argoproj.io/sync-wave: "1"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -17,7 +17,7 @@ spec:
   source:
     repoURL: https://github.com/mathisDlmr/k3s-project.git
     targetRevision: main
-    path: argocd/
+    path: meta/
   syncPolicy:
     automated:
       selfHeal: true

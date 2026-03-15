@@ -312,3 +312,21 @@ Les secrets à recréer à partir de clés définies sont :
 - cloudflare-tunnel-token-secret.yaml
 
 Les autres peuvent être définis manuellement.
+
+## 13. Troubleshooting
+
+### Problème de réseau inter-noeuds (Pods inaccessibles, DNS resolving timeout)
+
+Si les requêtes entre les pods de différents nœuds ne fonctionnent pas (ou si CoreDNS est inaccessible depuis un autre nœud), il est possible que l'interface réseau `flannel.1` ou son routage ait sauté.
+
+**Symptômes :**
+
+- `Context cancelled` par Traefik, ou timeout de la base de données.
+- Impossibilité de contacter un pod (ex: `10.42.x.x`) depuis un autre nœud.
+- Disparition de l'interface `flannel.1` dans `ip a`.
+
+**Résolution :**
+Redémarrer les services K3s pour forcer la recréation de l'interface et de la table de routage Flannel.
+
+- Sur le control-plane : `sudo systemctl restart k3s`
+- Sur le(s) worker(s) : `sudo systemctl restart k3s-agent`

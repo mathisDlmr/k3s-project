@@ -1,0 +1,8 @@
+global:
+  image:
+    repository: ghcr.io/mathisdlmr/argocd
+    tag: "v3.3.3"
+
+configs:
+  params:
+    server.insecure: "true"

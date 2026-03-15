@@ -23,6 +23,7 @@
 
 - [ ] Remplacer Flannel par Cillium pour le CNI (et voir si y a pas d'autres trucs pourris qui trainent
 - [ ] Voir pour des métriques sur tous les services : loki, tempo, traefik, etc.
+- [ ] Switch de sealed-secrets à external secrets
 - [ ] Dashboards Grafana ArgoCD, Cloudflare, Traefik...
 - [ ] Redis global (app "utils")
 - [ ] EFK (Elasticsearch, FluentBit, Kibana) pour se former dessus en parallèle (app "monitoring-v2")
