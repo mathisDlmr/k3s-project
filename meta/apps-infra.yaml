@@ -4,7 +4,6 @@ metadata:
   name: infra
   namespace: argocd
   labels:
-    argocd.argoproj.io/instance: infra
     app.kubernetes.io/part-of: meta
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
