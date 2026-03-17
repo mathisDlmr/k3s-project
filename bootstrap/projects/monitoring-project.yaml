@@ -13,6 +13,9 @@ spec:
     - name: "*"
       namespace: monitoring
       server: "*"
+    - name: "*"
+      namespace: kube-system
+      server: "*"
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"
