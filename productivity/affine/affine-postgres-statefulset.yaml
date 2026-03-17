@@ -59,7 +59,9 @@ spec:
             limits:
               memory: "512Mi"
   volumeClaimTemplates:
-    - metadata:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
         name: postgres-data
       spec:
         accessModes: ["ReadWriteOnce"]
