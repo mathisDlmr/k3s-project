@@ -4,7 +4,7 @@ metadata:
   name: apps-affine
   namespace: argocd
   labels:
-    argocd.argoproj.io/instance: apps-affine
+    argocd.argoproj.io/instance: productivity
     app.kubernetes.io/part-of: productivity
   finalizers:
     - resources-finalizer.argocd.argoproj.io
