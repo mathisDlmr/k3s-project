@@ -17,7 +17,8 @@ spec:
       path: /metrics
       honorLabels: true
       relabelings:
-        - sourceLabels: [__metrics_path__]
+        - action: replace
+          sourceLabels: [__metrics_path__]
           targetLabel: metrics_path
   namespaceSelector:
     matchNames:
