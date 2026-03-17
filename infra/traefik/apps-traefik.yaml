@@ -4,7 +4,7 @@ metadata:
   name: traefik
   namespace: argocd
   labels:
-    argocd.argoproj.io/instance: traefik
+    argocd.argoproj.io/instance: infra
     app.kubernetes.io/part-of: infra
   finalizers:
     - resources-finalizer.argocd.argoproj.io

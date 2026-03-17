@@ -4,7 +4,7 @@ metadata:
   name: alloy
   namespace: argocd
   labels:
-    argocd.argoproj.io/instance: alloy
+    argocd.argoproj.io/instance: monitoring
     app.kubernetes.io/part-of: monitoring
   finalizers:
     - resources-finalizer.argocd.argoproj.io

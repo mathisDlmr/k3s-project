@@ -4,7 +4,7 @@ metadata:
   name: tempo
   namespace: argocd
   labels:
-    argocd.argoproj.io/instance: tempo
+    argocd.argoproj.io/instance: monitoring
     app.kubernetes.io/part-of: monitoring
   finalizers:
     - resources-finalizer.argocd.argoproj.io
