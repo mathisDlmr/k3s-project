@@ -63,7 +63,9 @@ spec:
                     values:
                       - stable
   volumeClaimTemplates:
-    - metadata:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
         name: mysql-data
       spec:
         accessModes: ["ReadWriteOnce"]
