@@ -8,13 +8,13 @@ spec:
     - "*"
   destinations:
     - name: "*"
-      namespace: affine
+      namespace: argocd
       server: "*"
     - name: "*"
       namespace: productivity
       server: "*"
     - name: "*"
-      namespace: argocd
+      namespace: affine
       server: "*"
   clusterResourceWhitelist:
     - group: "*"

@@ -8,10 +8,10 @@ spec:
     - "*"
   destinations:
     - name: "*"
-      namespace: monitoring
+      namespace: argocd
       server: "*"
     - name: "*"
-      namespace: argocd
+      namespace: monitoring
       server: "*"
   clusterResourceWhitelist:
     - group: "*"

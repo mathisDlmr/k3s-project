@@ -8,13 +8,16 @@ spec:
     - "*"
   destinations:
     - name: "*"
+      namespace: argocd
+      server: "*"
+    - name: "*"
       namespace: infra
       server: "*"
     - name: "*"
       namespace: kube-system
       server: "*"
     - name: "*"
-      namespace: argocd
+      namespace: traefik
       server: "*"
   clusterResourceWhitelist:
     - group: "*"

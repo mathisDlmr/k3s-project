@@ -8,16 +8,13 @@ spec:
     - "*"
   destinations:
     - name: "*"
+      namespace: argocd
+      server: "*"
+    - name: "*"
       namespace: skiut
       server: "*"
     - name: "*"
       namespace: website
-      server: "*"
-    - name: "*"
-      namespace: default
-      server: "*"
-    - name: "*"
-      namespace: argocd
       server: "*"
   clusterResourceWhitelist:
     - group: "*"
