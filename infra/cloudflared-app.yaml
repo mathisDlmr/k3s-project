@@ -1,13 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: infra
+  name: cloudflared
   namespace: argocd
   labels:
-    app.kubernetes.io/part-of: meta
-    argocd.argoproj.io/instance: meta
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/instance: infra
+    app.kubernetes.io/part-of: infra
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -18,7 +16,7 @@ spec:
   source:
     repoURL: https://github.com/mathisDlmr/k3s-project.git
     targetRevision: main
-    path: infra/
+    path: infra/cloudflared/
   syncPolicy:
     automated:
       selfHeal: true
