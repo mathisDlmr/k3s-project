@@ -21,6 +21,8 @@
 
 ## FEAT
 
+- cleanup sur la partie monitoring (folders organisés n'importe comment)
+- dashboards prometheus en gitops
 - [ ] Remplacer Flannel par Cillium pour le CNI (et voir si y a pas d'autres trucs pourris qui trainent
 - [ ] Voir pour des métriques sur tous les services : loki, tempo, traefik, etc.
 - [ ] Un peu de cyber-sécu
