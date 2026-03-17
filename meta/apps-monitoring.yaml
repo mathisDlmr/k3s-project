@@ -4,7 +4,7 @@ metadata:
   name: monitoring
   namespace: argocd
   labels:
-    argocd.argoproj.io/instance: monitoring
+    argocd.argoproj.io/instance: meta
     app.kubernetes.io/part-of: meta
   finalizers:
     - resources-finalizer.argocd.argoproj.io

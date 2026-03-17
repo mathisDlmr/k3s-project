@@ -4,7 +4,7 @@ metadata:
   name: website
   namespace: argocd
   labels:
-    argocd.argoproj.io/instance: website
+    argocd.argoproj.io/instance: meta
     app.kubernetes.io/part-of: meta
   finalizers:
     - resources-finalizer.argocd.argoproj.io

@@ -4,7 +4,7 @@ metadata:
   name: productivity
   namespace: argocd
   labels:
-    argocd.argoproj.io/instance: productivity
+    argocd.argoproj.io/instance: meta
     app.kubernetes.io/part-of: meta
   finalizers:
     - resources-finalizer.argocd.argoproj.io
