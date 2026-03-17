@@ -132,8 +132,8 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 ARGOCD_PWD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
 kubectl -n argocd port-forward svc/argocd-server 8081:443 &
 
-echo "Déploiement de apps-meta.yaml..."
-kubectl apply -f ./argocd/apps-meta.yaml
+echo "Déploiement de l'app bootstrap..."
+kubectl apply -f ./bootstrap-app.yaml
 
 # ---------------------------
 # 8. SealedSecrets
@@ -185,6 +185,9 @@ echo "fs.inotify.max_user_watches = 524288" | sudo tee -a /etc/sysctl.conf
 echo "fs.inotify.max_user_instances = 512" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 
+# ---------------------------
+# 11. Git push new cloudflared secrets
+# ---------------------------
 echo "Chiffrement des secrets avec kubeseal..."
 kubeseal --controller-namespace infra --controller-name sealed-secrets --format yaml < ./infra/cloudflared/cloudflare-api-token-secret.yaml > ./infra/cloudflared/cloudflare-api-token-sealed-secret.yaml
 kubeseal --controller-namespace infra --controller-name sealed-secrets --format yaml < ./infra/cloudflared/cloudflare-tunnel-token-secret.yaml > ./infra/cloudflared/cloudflare-tunnel-token-sealed-secret.yaml
@@ -192,6 +195,9 @@ git add infra/cloudflared/cloudflare-api-token-sealed-secret.yaml infra/cloudfla
 git commit -m "chore(infra: cloudflare): roll cloudflare sealed-secrets with new encryption key"
 git push
 
+# ---------------------------
+# 12. Final message
+# ---------------------------
 echo "Setup terminé !"
 echo "Accès ArgoCD UI: http://localhost:8081 (login: admin, mot de passe $ARGOCD_PWD)"
 echo "Pour accéder au control-plane depuis votre pc, faites le rejoindre le réseau Tailscale et ajouter dans ~/.kube/config : "
