@@ -16,6 +16,9 @@ spec:
     - name: "*"
       namespace: default
       server: "*"
+    - name: "*"
+      namespace: argocd
+      server: "*"
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"

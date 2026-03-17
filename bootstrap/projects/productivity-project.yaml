@@ -13,6 +13,9 @@ spec:
     - name: "*"
       namespace: productivity
       server: "*"
+    - name: "*"
+      namespace: argocd
+      server: "*"
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"
