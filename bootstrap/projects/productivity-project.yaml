@@ -1,14 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: default
+  name: productivity
   namespace: argocd
 spec:
   sourceRepos:
     - "*"
   destinations:
-    - server: "https://kubernetes.default.svc"
-      namespace: argocd
+    - name: "*"
+      namespace: affine
+      server: "*"
+    - name: "*"
+      namespace: productivity
+      server: "*"
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"

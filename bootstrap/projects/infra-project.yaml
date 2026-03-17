@@ -1,14 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: default
+  name: infra
   namespace: argocd
 spec:
   sourceRepos:
     - "*"
   destinations:
-    - server: "https://kubernetes.default.svc"
-      namespace: argocd
+    - name: "*"
+      namespace: infra
+      server: "*"
+    - name: "*"
+      namespace: kube-system
+      server: "*"
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"

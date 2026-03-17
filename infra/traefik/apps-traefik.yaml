@@ -9,7 +9,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: infra
   sources:
     - repoURL: https://github.com/mathisDlmr/k3s-project.git
       targetRevision: main

@@ -9,7 +9,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: productivity
   destination:
     server: https://kubernetes.default.svc
     namespace: affine
