@@ -5,6 +5,7 @@ metadata:
   namespace: argocd
   labels:
     app.kubernetes.io/managed-by: argocd
+    argocd.argoproj.io/instance: meta
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
   finalizers:
