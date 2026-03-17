@@ -2,3 +2,12 @@ global:
   image:
     repository: ghcr.io/mathisdlmr/argocd
     tag: "v3.3.3"
+
+server:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik
+      traefik.ingress.kubernetes.io/router.tls: "true"
+    hosts:
+      - argocd.mdlmr.fr
