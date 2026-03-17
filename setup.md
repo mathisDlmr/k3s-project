@@ -285,7 +285,7 @@ Puis ajouter la clé privée dans ArgoCD : Settings > Repository
 ## 11. Créer l'app meta qui va tout déployer
 
 ```bash
-k apply -f argocd/apps-meta.yaml
+k apply -f bootstrap-app.yaml
 ```
 
 ## 12. Installer kubeseal pour chiffrer nos secrets

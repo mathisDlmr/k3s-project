@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: apps-affine
+  name: affine
   namespace: argocd
   labels:
     argocd.argoproj.io/instance: productivity
