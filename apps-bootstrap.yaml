@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
+  name: argocd-bootstrap
   namespace: argocd
   labels:
     app.kubernetes.io/part-of: argocd
@@ -12,16 +12,10 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
-  sources:
-    - repoURL: https://argoproj.github.io/argo-helm
-      chart: argo-cd
-      targetRevision: "9.4.10"
-      helm:
-        valueFiles:
-          - $values/argocd/install/values.yaml
-    - repoURL: https://github.com/mathisDlmr/k3s-project.git
-      targetRevision: main
-      ref: values
+  source:
+    repoURL: https://github.com/mathisDlmr/k3s-project.git
+    targetRevision: main
+    path: bootstrap/
   syncPolicy:
     automated:
       selfHeal: true
@@ -29,6 +23,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
+      - ApplyOutOfSyncOnly=true
     retry:
       limit: 5
       backoff:

@@ -1,13 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: infra
+  name: argocd-projects
   namespace: argocd
   labels:
-    app.kubernetes.io/part-of: meta
-    argocd.argoproj.io/instance: meta
+    app.kubernetes.io/part-of: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-wave: "1"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -18,7 +17,7 @@ spec:
   source:
     repoURL: https://github.com/mathisDlmr/k3s-project.git
     targetRevision: main
-    path: infra/
+    path: bootstrap/projects
   syncPolicy:
     automated:
       selfHeal: true
@@ -26,6 +25,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
+      - ApplyOutOfSyncOnly=true
     retry:
       limit: 5
       backoff:

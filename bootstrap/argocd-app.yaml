@@ -1,12 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-bootstrap
+  name: argocd
   namespace: argocd
   labels:
     app.kubernetes.io/part-of: argocd
-  annotations:
-    description: "Application bootstrap déployée à la main — déploie le dossier argocd/ qui contient le self-management d'ArgoCD"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -14,12 +12,16 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
-  source:
-    repoURL: https://github.com/mathisDlmr/k3s-project.git
-    targetRevision: main
-    path: argocd/
-    directory:
-      recurse: true
+  sources:
+    - repoURL: https://github.com/mathisDlmr/k3s-project.git
+      targetRevision: main
+      ref: k3s-project
+    - repoURL: https://argoproj.github.io/argo-helm
+      chart: argo-cd
+      targetRevision: "9.4.10"
+      helm:
+        valueFiles:
+          - $k3s-project/valueFiles/argocd.yaml
   syncPolicy:
     automated:
       selfHeal: true
@@ -27,7 +29,6 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
-      - ApplyOutOfSyncOnly=true
     retry:
       limit: 5
       backoff:
