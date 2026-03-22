@@ -1,3 +1,23 @@
+deployment:
+  kind: DaemonSet
+
+hostNetwork: false
+
+ports:
+  web:
+    port: 8000
+    hostPort: 80
+    expose:
+      default: true
+  websecure:
+    port: 8443
+    hostPort: 443
+    expose:
+      default: true
+
+service:
+  type: ClusterIP
+
 tlsStore:
   default:
     defaultCertificate:
