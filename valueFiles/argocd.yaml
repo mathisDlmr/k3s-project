@@ -3,6 +3,11 @@ global:
     repository: ghcr.io/mathisdlmr/argocd
     tag: "v3.3.3"
 
+configs:
+  params:
+    annotations:
+      server.insecure: "true"
+
 controller:
   metrics:
     enabled: true
@@ -10,8 +15,6 @@ controller:
       enabled: true
 
 server:
-  extraArgs:
-    - --insecure
   metrics:
     enabled: true
     serviceMonitor:
