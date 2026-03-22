@@ -10,6 +10,8 @@ controller:
       enabled: true
 
 server:
+  extraArgs:
+    - --insecure
   metrics:
     enabled: true
     serviceMonitor:
