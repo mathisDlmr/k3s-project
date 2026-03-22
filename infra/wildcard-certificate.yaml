@@ -3,6 +3,8 @@ kind: Certificate
 metadata:
   name: mdlmr-fr-wildcard
   namespace: traefik
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   secretName: mdlmr-fr-wildcard-tls
   issuerRef:
