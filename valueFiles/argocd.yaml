@@ -5,8 +5,7 @@ global:
 
 configs:
   params:
-    annotations:
-      server.insecure: "true"
+    server.insecure: "true"
 
 controller:
   metrics:
@@ -19,12 +18,12 @@ server:
     enabled: true
     serviceMonitor:
       enabled: true
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: traefik
-      traefik.ingress.kubernetes.io/router.tls: "true"
-    # hostname: argocd.mdlmr.fr
+  # ingress:
+  #   enabled: true
+  #   annotations:
+  #     kubernetes.io/ingress.class: traefik
+  #     traefik.ingress.kubernetes.io/router.tls: "true"
+  #   hostname: argocd.mdlmr.fr
 
 repoServer:
   metrics:
