@@ -6,6 +6,13 @@ global:
 configs:
   params:
     server.insecure: "true"
+  cm:
+    # Ignorer l'absence d'IP LoadBalancer sur les Ingress
+    resource.customizations.health.networking.k8s.io_Ingress: |
+      hs = {}
+      hs.status = "Healthy"
+      hs.message = "Ingress is Healthy (LB IP check ignored)"
+      return hs
 
 controller:
   metrics:

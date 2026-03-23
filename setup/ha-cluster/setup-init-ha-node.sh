@@ -140,7 +140,9 @@ cilium install \
   --set k8sServicePort=6443 \
   --set routingMode=tunnel \
   --set tunnelProtocol=vxlan \
-  --set mtu=1200
+  --set mtu=1200 \
+  --set hubble.relay.enabled=true \
+  --set hubble.ui.enabled=true
 
 echo "Attente que Cilium soit prêt (3/3)..."
 cilium status --wait
