@@ -1,0 +1,29 @@
+server:
+  retentionPeriod: 30
+
+  persistentVolume:
+    enabled: true
+    storageClass: local-path
+    size: 10Gi
+    accessModes:
+      - ReadWriteOnce
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+
+  scrape:
+    enabled: false
+
+  service:
+    type: ClusterIP
+    servicePort: 8428
+
+  extraArgs:
+    envflag.enable: "true"
+    envflag.prefix: VM_
+    loggerFormat: json
