@@ -23,9 +23,10 @@
 
 - cleanup sur la partie monitoring (folders organisés n'importe comment pour metrics/)
 - dashboards prometheus en gitops
+- Velero
 - [ ] Remplacer Flannel par Cillium pour le CNI (et voir si y a pas d'autres trucs pourris qui trainent
+- Cillium Hubble
 - [ ] Voir pour des métriques sur tous les services : loki, tempo, traefik, etc.
-- [ ] Un peu de cyber-sécu
 - [ ] Refaire la doc de README
 - [ ] Switch de sealed-secrets à external secrets
 - [ ] Dashboards Grafana ArgoCD, Cloudflare, Traefik...
@@ -59,3 +60,85 @@
 - [ ] Ajouter un filtre sur les projets
 - [ ] Mettre à jour les liens, descriptions, langages... dans les projects
 - [ ] Proposer plusieurs screens/pdf de chaque projet
+
+## Migration 21/03/2026
+
+une fois longhorn -> --disable=local-storage sur k3s
+
+une fois CNI :
+
+# /etc/rancher/k3s/config.yaml
+
+disable:
+
+- servicelb
+- traefik # si tu gères ton propre Traefik
+
+# /etc/rancher/k3s/config.yaml
+
+write-kubeconfig-mode: "0600"
+
+# Désactiver les composants non utilisés
+
+disable:
+
+- servicelb
+- traefik
+- local-storage # après migration Longhorn
+
+# Réseau
+
+flannel-backend: none # si tu utilises Cilium
+disable-network-policy: true # Cilium gère ça
+
+# Perf etcd (pour HA)
+
+etcd-arg:
+
+- "quota-backend-bytes=4294967296" # 4Gi max DB size
+- "auto-compaction-mode=periodic"
+- "auto-compaction-retention=1h"
+
+# Kubelet tuning
+
+kubelet-arg:
+
+- "max-pods=110"
+- "kube-reserved=cpu=100m,memory=256Mi"
+- "system-reserved=cpu=100m,memory=256Mi"
+- "eviction-hard=memory.available<200Mi,nodefs.available<10%"
+
+# API server
+
+kube-apiserver-arg:
+
+- "audit-log-path=/var/log/k3s-audit.log"
+- "audit-log-maxage=7"
+
+🔥 1. Sécurité Kubernetes (très important pour la suite)
+
+Tu n’en parles pas encore, mais plus critique que SSH :
+
+👉 à faire plus tard :
+
+RBAC strict
+pas de cluster-admin partout
+limiter les ServiceAccount
+🔥 2. Sécuriser K3S lui-même
+
+Exemples :
+
+permissions sur /etc/rancher/k3s/k3s.yaml
+rotation des certificats
+tokens sécurisés
+🔥 3. Isolation réseau (CNI)
+
+Quand tu passeras à :
+
+Longhorn
+HA
+
+👉 il faudra vérifier :
+
+traffic inter-node sécurisé
+policies réseau (NetworkPolicy)

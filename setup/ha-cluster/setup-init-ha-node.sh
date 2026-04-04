@@ -144,7 +144,7 @@ cilium install \
   --set hubble.relay.enabled=true \
   --set hubble.ui.enabled=true
 
-echo "Attente que Cilium soit prêt (3/3)..."
+echo "Attente que Cilium soit prêt..."
 cilium status --wait
 
 # ---------------------------
