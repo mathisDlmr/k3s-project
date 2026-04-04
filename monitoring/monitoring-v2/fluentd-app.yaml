@@ -16,7 +16,7 @@ spec:
       ref: k3s-project
     - repoURL: https://fluent.github.io/helm-charts
       chart: fluentd
-      targetRevision: 0.5.4
+      targetRevision: 0.5.3
       helm:
         valueFiles:
           - $k3s-project/valueFiles/fluentd.yaml

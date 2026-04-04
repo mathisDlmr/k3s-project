@@ -2,11 +2,6 @@ kind: DaemonSet
 
 replicaCount: 1
 
-image:
-  repository: fluent/fluentd-kubernetes-daemonset
-  tag: v1.16-debian-elasticsearch8-1
-  pullPolicy: IfNotPresent
-
 volumes:
   - name: varlog
     hostPath:
