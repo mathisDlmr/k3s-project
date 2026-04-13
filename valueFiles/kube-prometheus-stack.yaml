@@ -27,6 +27,31 @@ prometheus:
           resources:
             requests:
               storage: 20Gi
+    additionalScrapeConfigs:
+      - job_name: 'k3s-server'
+        static_configs:
+          - targets: ['localhost:10250']
+        scheme: https
+        tls_config:
+          insecure_skip_verify: true
+      - job_name: 'k3s-controller-manager'
+        static_configs:
+          - targets: ['localhost:10257']
+        scheme: https
+        tls_config:
+          insecure_skip_verify: true
+      - job_name: 'k3s-scheduler'
+        static_configs:
+          - targets: ['localhost:10259']
+        scheme: https
+        tls_config:
+          insecure_skip_verify: true
+      - job_name: 'k3s-etcd'
+        static_configs:
+          - targets: ['localhost:2381']
+        scheme: https
+        tls_config:
+          insecure_skip_verify: true
     resources:
       requests:
         memory: "768Mi"
