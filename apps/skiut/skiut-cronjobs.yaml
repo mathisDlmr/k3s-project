@@ -3,6 +3,7 @@ kind: CronJob
 metadata:
   name: skiut-permanence-reminder-cronjob
 spec:
+  suspend: true
   schedule: "*/10 * * * *"
   jobTemplate:
     spec:
