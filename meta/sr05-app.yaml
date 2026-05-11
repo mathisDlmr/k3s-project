@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: sr05-app
-  namespace: werewolf
+  namespace: argocd
   labels:
     argocd.argoproj.io/instance: meta
     app.kubernetes.io/part-of: meta
@@ -10,13 +10,13 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: werewolf
   sources:
     - repoURL: https://github.com/mathisdlmr/sr05-projet.git
       targetRevision: main
       path: k8s/
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: werewolf
   syncPolicy:
     automated:
       selfHeal: true
